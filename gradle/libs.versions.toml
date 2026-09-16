@@ -21,3 +21,4 @@ junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android_library_plugin" }
 maven-publish = { id = "com.vanniktech.maven.publish", version = "0.37.0" }
+binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.18.1" }
