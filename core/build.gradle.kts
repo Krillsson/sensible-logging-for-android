@@ -1,22 +1,31 @@
 plugins {
-    kotlin("jvm")
+    kotlin("multiplatform")
     id("com.vanniktech.maven.publish")
 }
 
 kotlin {
     jvmToolchain(17)
+
+    jvm()
+    iosArm64()
+    iosSimulatorArm64()
+    macosArm64()
+
+    sourceSets {
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+        jvmTest.dependencies {
+            implementation(libs.mockk)
+            implementation(project.dependencies.platform(libs.junit.bom))
+            implementation(libs.junit.jupiter)
+            runtimeOnly(libs.junit.platform.launcher)
+        }
+    }
 }
 
 mavenPublishing {
     coordinates(artifactId = "sensible-logging-core")
-}
-
-dependencies {
-    implementation(libs.kotlin.stdlib)
-    testImplementation(libs.mockk)
-    testImplementation(platform(libs.junit.bom))
-    testImplementation(libs.junit.jupiter)
-    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.withType<Test> {
