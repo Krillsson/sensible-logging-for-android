@@ -58,18 +58,16 @@ internal actual fun printToStandardError(message: String) {
     fflush(stderr)
 }
 
-internal actual fun createMeta(stackDepth: Int): Meta = Meta(
-    className = NOT_AVAILABLE,
-    simpleClassName = NOT_AVAILABLE,
-    functionName = NOT_AVAILABLE,
-    lineNumber = 0,
-    threadName = currentThreadName(),
-    fileName = NOT_AVAILABLE
-)
-
-internal fun currentThreadName(): String {
+internal actual fun createMeta(stackDepth: Int): Meta {
     val thread = NSThread.currentThread
-    return thread.name?.takeIf { it.isNotEmpty() } ?: if (thread.isMainThread) "main" else NOT_AVAILABLE
+    return Meta(
+        className = NOT_AVAILABLE,
+        simpleClassName = NOT_AVAILABLE,
+        functionName = NOT_AVAILABLE,
+        lineNumber = 0,
+        threadName = thread.name?.takeIf { it.isNotEmpty() } ?: if (thread.isMainThread) "main" else NOT_AVAILABLE,
+        fileName = NOT_AVAILABLE
+    )
 }
 
 private const val NOT_AVAILABLE = "n/a"

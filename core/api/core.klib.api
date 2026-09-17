@@ -290,10 +290,6 @@ final object sh.vcm.sensiblelogging/Logger { // sh.vcm.sensiblelogging/Logger|nu
     }
 }
 
-final object sh.vcm.sensiblelogging/SwiftLogger { // sh.vcm.sensiblelogging/SwiftLogger|null[0]
-    final fun log(sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin/String, kotlin/String, kotlin/Int) // sh.vcm.sensiblelogging/SwiftLogger.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.String;kotlin.Int){}[0]
-}
-
 final fun (sh.vcm.sensiblelogging.filter/Filter).sh.vcm.sensiblelogging.filter/and(sh.vcm.sensiblelogging.filter/Filter): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/and|and@sh.vcm.sensiblelogging.filter.Filter(sh.vcm.sensiblelogging.filter.Filter){}[0]
 final fun (sh.vcm.sensiblelogging.filter/Filter).sh.vcm.sensiblelogging.filter/or(sh.vcm.sensiblelogging.filter/Filter): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/or|or@sh.vcm.sensiblelogging.filter.Filter(sh.vcm.sensiblelogging.filter.Filter){}[0]
 final fun (sh.vcm.sensiblelogging/Logger.Setup.Configuration).sh.vcm.sensiblelogging/addNSLogChannel(sh.vcm.sensiblelogging.filter/Filter = ..., sh.vcm.sensiblelogging.formatter/Formatter = ..., kotlin/Boolean = ...): sh.vcm.sensiblelogging/Logger.Setup.Configuration // sh.vcm.sensiblelogging/addNSLogChannel|addNSLogChannel@sh.vcm.sensiblelogging.Logger.Setup.Configuration(sh.vcm.sensiblelogging.filter.Filter;sh.vcm.sensiblelogging.formatter.Formatter;kotlin.Boolean){}[0]
