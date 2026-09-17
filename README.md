@@ -142,6 +142,12 @@ object Categories {
  Logger.d("Initialising the flux capacitor", Categories.Default, Channels.LogCat)
 ```
 
+When a message is expensive to build, pass it as a lambda. It is only evaluated when at least one channel might print it,
+based on `Filter.mightMatch(level, category)`:
+```kotlin
+ Logger.d(Categories.Network) { "Response body: ${response.body}" }
+```
+
 ### Step 3
 Build your own Channels, Filters & Formatters to solve your project needs.
 
@@ -166,7 +172,9 @@ val channels = Logger.Setup.Configuration()
 Logger.Setup.addChannels(channels)
 ```
 
-`Meta` is only fully populated on the JVM. On Apple targets, only the thread name is available.
+`Meta` is only fully populated on the JVM. On Apple targets, only the thread name is available, unless you
+pass `Meta` yourself with `Logger.log(level, message, preFormattedMessage, meta, ...)`, for example from Swift where the
+file, function and line are known at the call site.
 
 Download
 --------

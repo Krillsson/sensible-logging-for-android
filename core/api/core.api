@@ -51,48 +51,62 @@ public final class sh/vcm/sensiblelogging/Logger {
 	public static final field INSTANCE Lsh/vcm/sensiblelogging/Logger;
 	public static final fun addChannels ([Lsh/vcm/sensiblelogging/channel/Channel;)V
 	public static final fun d (Ljava/lang/String;[I)V
+	public static final fun d (Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun d$default (Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun d-0oEmxP0 (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[I)V
 	public static synthetic fun d-0oEmxP0$default (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
+	public static final fun d-8CTdiCo (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun d-tRkZg1I (Ljava/lang/String;Ljava/lang/String;[I)V
 	public static synthetic fun d-tRkZg1I$default (Ljava/lang/String;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun e (Ljava/lang/String;Ljava/lang/Throwable;[I)V
 	public static final fun e (Ljava/lang/String;[I)V
+	public static final fun e (Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun e$default (Ljava/lang/String;Ljava/lang/Throwable;[IILjava/lang/Object;)V
 	public static synthetic fun e$default (Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun e-0oEmxP0 (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;[I)V
 	public static final fun e-0oEmxP0 (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[I)V
 	public static synthetic fun e-0oEmxP0$default (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static synthetic fun e-0oEmxP0$default (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
+	public static final fun e-8CTdiCo (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public static final fun e-AyTmfXc (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static final fun e-jQ_pDWk (Ljava/lang/String;Ljava/lang/Throwable;Ljava/util/Map;Ljava/lang/String;[I)V
 	public static synthetic fun e-jQ_pDWk$default (Ljava/lang/String;Ljava/lang/Throwable;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun e-tRkZg1I (Ljava/lang/String;Ljava/lang/String;[I)V
 	public static synthetic fun e-tRkZg1I$default (Ljava/lang/String;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun i (Ljava/lang/String;[I)V
+	public static final fun i (Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun i$default (Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun i-0oEmxP0 (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[I)V
 	public static synthetic fun i-0oEmxP0$default (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
+	public static final fun i-8CTdiCo (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun i-tRkZg1I (Ljava/lang/String;Ljava/lang/String;[I)V
 	public static synthetic fun i-tRkZg1I$default (Ljava/lang/String;Ljava/lang/String;[IILjava/lang/Object;)V
+	public static final fun log-PofLx_o (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLsh/vcm/sensiblelogging/Meta;Ljava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;)V
+	public static synthetic fun log-PofLx_o$default (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLsh/vcm/sensiblelogging/Meta;Ljava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;ILjava/lang/Object;)V
 	public static final fun log-S2VUCFE (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLjava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;I)V
 	public static synthetic fun log-S2VUCFE$default (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLjava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;IILjava/lang/Object;)V
 	public static final fun removeChannels ([Lsh/vcm/sensiblelogging/channel/Channel;)V
 	public static final fun v (Ljava/lang/String;[I)V
+	public static final fun v (Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun v$default (Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun v-0oEmxP0 (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[I)V
 	public static synthetic fun v-0oEmxP0$default (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
+	public static final fun v-8CTdiCo (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun v-jwY2Bu4 (Ljava/lang/String;Ljava/lang/String;)V
 	public static synthetic fun v-jwY2Bu4$default (Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
 	public static final fun v-tRkZg1I (Ljava/lang/String;Ljava/lang/String;[I)V
 	public static synthetic fun v-tRkZg1I$default (Ljava/lang/String;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun w (Ljava/lang/String;Ljava/lang/Throwable;[I)V
 	public static final fun w (Ljava/lang/String;[I)V
+	public static final fun w (Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun w$default (Ljava/lang/String;Ljava/lang/Throwable;[IILjava/lang/Object;)V
 	public static synthetic fun w$default (Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun w-0oEmxP0 (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;[I)V
 	public static final fun w-0oEmxP0 (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[I)V
 	public static synthetic fun w-0oEmxP0$default (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static synthetic fun w-0oEmxP0$default (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
+	public static final fun w-8CTdiCo (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public static final fun w-AyTmfXc (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static final fun w-jQ_pDWk (Ljava/lang/String;Ljava/lang/Throwable;Ljava/util/Map;Ljava/lang/String;[I)V
 	public static synthetic fun w-jQ_pDWk$default (Ljava/lang/String;Ljava/lang/Throwable;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun w-tRkZg1I (Ljava/lang/String;Ljava/lang/String;[I)V
@@ -172,6 +186,7 @@ public final class sh/vcm/sensiblelogging/channel/StandardOutChannel$Companion {
 public final class sh/vcm/sensiblelogging/filter/AllowAllFilter : sh/vcm/sensiblelogging/filter/Filter {
 	public static final field INSTANCE Lsh/vcm/sensiblelogging/filter/AllowAllFilter;
 	public fun matches (Lsh/vcm/sensiblelogging/Line;)Z
+	public fun mightMatch-jwY2Bu4 (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;)Z
 }
 
 public abstract class sh/vcm/sensiblelogging/filter/CategoryFilter : sh/vcm/sensiblelogging/filter/FieldFilter {
@@ -182,6 +197,7 @@ public abstract class sh/vcm/sensiblelogging/filter/CategoryFilter : sh/vcm/sens
 	public synthetic fun locateField (Lsh/vcm/sensiblelogging/Line;)Ljava/lang/Object;
 	public fun locateField-3yPHYso (Lsh/vcm/sensiblelogging/Line;)Ljava/lang/String;
 	public fun matches (Lsh/vcm/sensiblelogging/Line;)Z
+	public fun mightMatch-jwY2Bu4 (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;)Z
 }
 
 public final class sh/vcm/sensiblelogging/filter/CombineFilters {
@@ -203,17 +219,23 @@ public abstract interface class sh/vcm/sensiblelogging/filter/FieldFilter : sh/v
 
 public final class sh/vcm/sensiblelogging/filter/FieldFilter$DefaultImpls {
 	public static fun matches (Lsh/vcm/sensiblelogging/filter/FieldFilter;Lsh/vcm/sensiblelogging/Line;)Z
+	public static fun mightMatch-jwY2Bu4 (Lsh/vcm/sensiblelogging/filter/FieldFilter;Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;)Z
 }
 
 public abstract interface class sh/vcm/sensiblelogging/filter/Filter {
 	public static final field Companion Lsh/vcm/sensiblelogging/filter/Filter$Companion;
 	public abstract fun matches (Lsh/vcm/sensiblelogging/Line;)Z
+	public fun mightMatch-jwY2Bu4 (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;)Z
 }
 
 public final class sh/vcm/sensiblelogging/filter/Filter$Companion {
 	public final fun allowAll ()Lsh/vcm/sensiblelogging/filter/Filter;
 	public final fun categories (Ljava/util/List;)Lsh/vcm/sensiblelogging/filter/Filter;
 	public final fun level (Lsh/vcm/sensiblelogging/Level;)Lsh/vcm/sensiblelogging/filter/Filter;
+}
+
+public final class sh/vcm/sensiblelogging/filter/Filter$DefaultImpls {
+	public static fun mightMatch-jwY2Bu4 (Lsh/vcm/sensiblelogging/filter/Filter;Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;)Z
 }
 
 public abstract class sh/vcm/sensiblelogging/filter/LogLevelFilter : sh/vcm/sensiblelogging/filter/FieldFilter {
@@ -224,6 +246,7 @@ public abstract class sh/vcm/sensiblelogging/filter/LogLevelFilter : sh/vcm/sens
 	public synthetic fun locateField (Lsh/vcm/sensiblelogging/Line;)Ljava/lang/Object;
 	public fun locateField (Lsh/vcm/sensiblelogging/Line;)Lsh/vcm/sensiblelogging/Level;
 	public fun matches (Lsh/vcm/sensiblelogging/Line;)Z
+	public fun mightMatch-jwY2Bu4 (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;)Z
 }
 
 public final class sh/vcm/sensiblelogging/filter/SimpleCategoryFilter : sh/vcm/sensiblelogging/filter/CategoryFilter {

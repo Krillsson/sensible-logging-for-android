@@ -4,6 +4,9 @@
 
 - `sensible-logging-core` is now a Kotlin Multiplatform library targeting `jvm`, `iosArm64`, `iosSimulatorArm64` and
   `macosArm64`. The JVM API is unchanged. Apple targets get an `NSLogChannel` and `addNSLogChannel`.
+- Added lambda overloads, for example `Logger.d(category) { "..." }`, that only build the message when a channel might
+  print it. Filters can override `mightMatch(level, category)` to take part in that check.
+- Added a `Logger.log` overload that takes `Meta` instead of reading it from the stack.
 
 ## [2.1.1] 2026-08-26
 

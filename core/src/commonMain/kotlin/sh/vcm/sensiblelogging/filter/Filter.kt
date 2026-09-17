@@ -23,6 +23,8 @@ import sh.vcm.sensiblelogging.Line
 interface Filter {
     fun matches(line: Line): Boolean
 
+    fun mightMatch(level: Level, category: Category): Boolean = true
+
     companion object {
         fun level(level: Level): Filter = SimpleLogLevelFilter(level)
         fun categories(categories: List<Category>): Filter = SimpleCategoryFilter(categories)

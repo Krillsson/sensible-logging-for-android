@@ -16,6 +16,7 @@
 
 package sh.vcm.sensiblelogging.filter
 
+import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 
@@ -23,4 +24,5 @@ abstract class LogLevelFilter : FieldFilter<Level> {
     abstract val level: Level
     override fun locateField(line: Line): Level = line.level
     override fun isAllowed(field: Level): Boolean = field.ordinal >= level.ordinal
+    override fun mightMatch(level: Level, category: Category): Boolean = isAllowed(level)
 }

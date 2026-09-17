@@ -44,4 +44,22 @@ internal class MetaDataFactoryTest {
         assertEquals("MetaDataFactoryTest.kt", meta.fileName)
         assertEquals(Thread.currentThread().name, meta.threadName)
     }
+
+    @Test
+    internal fun `should point meta at the function calling a lazy overload`() {
+        // GIVEN
+        Logger.Setup.addChannels(listOf(channel))
+
+        // WHEN
+        Logger.d { "Something happened" }
+        Logger.d(Category("UnitTest")) { "Something happened" }
+        Logger.e(Category("UnitTest"), IllegalStateException("boom")) { "Something happened" }
+
+        // THEN
+        assertEquals(3, channel.metas.size)
+        channel.metas.forEach { meta ->
+            assertEquals("MetaDataFactoryTest", meta.simpleClassName)
+            assertTrue(meta.functionName.startsWith("should point meta at the function calling a lazy overload"), meta.functionName)
+        }
+    }
 }

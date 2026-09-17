@@ -19,6 +19,7 @@ package sh.vcm.sensiblelogging.processor
 import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
+import sh.vcm.sensiblelogging.Meta
 import sh.vcm.sensiblelogging.channel.Channel
 import sh.vcm.sensiblelogging.channel.DebugChannel
 import sh.vcm.sensiblelogging.channel.ReleaseChannel
@@ -56,6 +57,11 @@ internal class LogProcessor {
         }
     }
 
+    fun mightPrint(level: Level, category: Category, channels: List<Int>): Boolean =
+        channelsArray.any { channel ->
+            (channel.default || channels.contains(channel.id)) && channel.filter.mightMatch(level, category)
+        }
+
     fun log(
         level: Level,
         message: String,
@@ -64,7 +70,8 @@ internal class LogProcessor {
         channels: List<Int>,
         throwable: Throwable?,
         parameters: Map<String, String>,
-        stackDepth: Int
+        stackDepth: Int,
+        meta: Meta?
     ) {
         channelsArray
             .filter { channel -> channel.default || channels.contains(channel.id) }
@@ -87,9 +94,9 @@ internal class LogProcessor {
                     .filter { it.filter.matches(line) }
                     .takeIf { it.isNotEmpty() }
                     ?.let { debugChannels ->
-                        val meta = MetaDataFactory.create(stackDepth)
+                        val lineMeta = meta ?: MetaDataFactory.create(stackDepth)
                         debugChannels.forEach { channel ->
-                            channel.printFiltered(line, meta)
+                            channel.printFiltered(line, lineMeta)
                         }
                     }
             }
