@@ -74,6 +74,8 @@ public final class sh/vcm/sensiblelogging/Logger {
 	public static synthetic fun i-0oEmxP0$default (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;[IILjava/lang/Object;)V
 	public static final fun i-tRkZg1I (Ljava/lang/String;Ljava/lang/String;[I)V
 	public static synthetic fun i-tRkZg1I$default (Ljava/lang/String;Ljava/lang/String;[IILjava/lang/Object;)V
+	public static final fun log-PofLx_o (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLsh/vcm/sensiblelogging/Meta;Ljava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;)V
+	public static synthetic fun log-PofLx_o$default (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLsh/vcm/sensiblelogging/Meta;Ljava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;ILjava/lang/Object;)V
 	public static final fun log-S2VUCFE (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLjava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;I)V
 	public static synthetic fun log-S2VUCFE$default (Lsh/vcm/sensiblelogging/Level;Ljava/lang/String;ZLjava/lang/String;Ljava/util/List;Ljava/lang/Throwable;Ljava/util/Map;IILjava/lang/Object;)V
 	public static final fun removeChannels ([Lsh/vcm/sensiblelogging/channel/Channel;)V

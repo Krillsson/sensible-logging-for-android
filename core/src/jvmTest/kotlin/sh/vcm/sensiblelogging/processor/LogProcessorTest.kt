@@ -69,7 +69,8 @@ internal class LogProcessorTest {
             Constants.DEFAULT_CHANNEL_LIST,
             null,
             emptyMap(),
-            Constants.DEFAULT_STACK_DEPTH
+            Constants.DEFAULT_STACK_DEPTH,
+            null
         )
 
         // THEN
@@ -93,7 +94,8 @@ internal class LogProcessorTest {
             Constants.DEFAULT_CHANNEL_LIST,
             null,
             emptyMap(),
-            Constants.DEFAULT_STACK_DEPTH
+            Constants.DEFAULT_STACK_DEPTH,
+            null
         )
 
         // THEN
@@ -116,7 +118,8 @@ internal class LogProcessorTest {
             Constants.DEFAULT_CHANNEL_LIST,
             null,
             emptyMap(),
-            Constants.DEFAULT_STACK_DEPTH
+            Constants.DEFAULT_STACK_DEPTH,
+            null
         )
 
         // THEN
@@ -151,7 +154,8 @@ internal class LogProcessorTest {
             Constants.DEFAULT_CHANNEL_LIST,
             null,
             emptyMap(),
-            Constants.DEFAULT_STACK_DEPTH
+            Constants.DEFAULT_STACK_DEPTH,
+            null
         )
 
         // THEN
@@ -177,7 +181,8 @@ internal class LogProcessorTest {
             listOf(1),
             null,
             emptyMap(),
-            Constants.DEFAULT_STACK_DEPTH
+            Constants.DEFAULT_STACK_DEPTH,
+            null
         )
 
         // THEN

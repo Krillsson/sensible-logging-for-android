@@ -38,26 +38,26 @@ object Logger {
         parameters: Map<String, String> = EMPTY_PARAMS,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.VERBOSE, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.VERBOSE, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun v(
         message: String,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.VERBOSE, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.VERBOSE, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun v(
         message: String,
         category: Category = DEFAULT_CATEGORY,
-    ) = processor.log(Level.VERBOSE, message, false, category, DEFAULT_CHANNEL_LIST, null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.VERBOSE, message, false, category, DEFAULT_CHANNEL_LIST, null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun v(
         message: String,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.VERBOSE, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.VERBOSE, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun d(
@@ -65,20 +65,20 @@ object Logger {
         parameters: Map<String, String> = EMPTY_PARAMS,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.DEBUG, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.DEBUG, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun d(
         message: String,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.DEBUG, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.DEBUG, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun d(
         message: String,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.DEBUG, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.DEBUG, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun i(
@@ -86,20 +86,20 @@ object Logger {
         parameters: Map<String, String> = EMPTY_PARAMS,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.INFO, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.INFO, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun i(
         message: String,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.INFO, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.INFO, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun i(
         message: String,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.INFO, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.INFO, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun w(
@@ -108,7 +108,7 @@ object Logger {
         parameters: Map<String, String> = EMPTY_PARAMS,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.WARN, message, false, category, channels.toList(), throwable, parameters, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), throwable, parameters, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun w(
@@ -116,7 +116,7 @@ object Logger {
         parameters: Map<String, String> = EMPTY_PARAMS,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.WARN, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun w(
@@ -124,27 +124,27 @@ object Logger {
         throwable: Throwable? = null,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.WARN, message, false, category, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun w(
         message: String,
         throwable: Throwable? = null,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.WARN, message, false, DEFAULT_CATEGORY, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.WARN, message, false, DEFAULT_CATEGORY, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun w(
         message: String,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.WARN, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun w(
         message: String,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.WARN, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.WARN, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun e(
@@ -152,7 +152,7 @@ object Logger {
         parameters: Map<String, String> = EMPTY_PARAMS,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun e(
@@ -160,7 +160,7 @@ object Logger {
         throwable: Throwable? = null,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun e(
@@ -169,27 +169,27 @@ object Logger {
         parameters: Map<String, String> = EMPTY_PARAMS,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), throwable, parameters, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), throwable, parameters, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun e(
         message: String,
         throwable: Throwable? = null,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.ERROR, message, false, DEFAULT_CATEGORY, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.ERROR, message, false, DEFAULT_CATEGORY, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun e(
         message: String,
         category: Category = DEFAULT_CATEGORY,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun e(
         message: String,
         vararg channels: Int = DEFAULT_CHANNELS
-    ) = processor.log(Level.ERROR, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+    ) = processor.log(Level.ERROR, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
     @JvmStatic
     fun log(
@@ -201,7 +201,19 @@ object Logger {
         throwable: Throwable? = null,
         parameters: Map<String, String> = EMPTY_PARAMS,
         stackDepth: Int = DEFAULT_STACK_DEPTH
-    ) = processor.log(level, message, preFormattedMessage, category, channels, throwable, parameters, stackDepth)
+    ) = processor.log(level, message, preFormattedMessage, category, channels, throwable, parameters, stackDepth, null)
+
+    @JvmStatic
+    fun log(
+        level: Level,
+        message: String,
+        preFormattedMessage: Boolean,
+        meta: Meta,
+        category: Category = DEFAULT_CATEGORY,
+        channels: List<Int> = DEFAULT_CHANNEL_LIST,
+        throwable: Throwable? = null,
+        parameters: Map<String, String> = EMPTY_PARAMS
+    ) = processor.log(level, message, preFormattedMessage, category, channels, throwable, parameters, DEFAULT_STACK_DEPTH, meta)
 
     @JvmStatic
     @Deprecated("Method moved into Log.Setup")

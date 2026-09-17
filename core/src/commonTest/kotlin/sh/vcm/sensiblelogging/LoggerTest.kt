@@ -67,6 +67,20 @@ internal class LoggerTest {
         assertTrue(channel.lines.isEmpty())
     }
 
+    @Test
+    internal fun `should give debug channels the meta passed to log`() {
+        // GIVEN
+        val channel = RecordingDebugChannel()
+        val meta = Meta("ContentView", "ContentView", "body", 42, "main", "ContentView.swift")
+        Logger.Setup.addChannels(listOf(channel))
+
+        // WHEN
+        Logger.log(Level.INFO, "Something happened", false, meta, category)
+
+        // THEN
+        assertSame(meta, channel.metas.single())
+    }
+
     private class RecordingReleaseChannel : ReleaseChannel() {
         val lines = mutableListOf<Line>()
         override val filter: Filter = AllowAllFilter
