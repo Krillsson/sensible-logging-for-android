@@ -17,12 +17,10 @@
 package sh.vcm.sensiblelogging.filter
 
 import sh.vcm.sensiblelogging.Category
-import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 
 abstract class CategoryFilter : FieldFilter<Category> {
     abstract val categories: List<Category>
     override fun locateField(line: Line): Category = line.category
     override fun isAllowed(field: Category): Boolean = categories.any { field == it }
-    override fun mightMatch(level: Level, category: Category): Boolean = isAllowed(category)
 }

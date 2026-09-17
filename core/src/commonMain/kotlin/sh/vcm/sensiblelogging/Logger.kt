@@ -216,50 +216,6 @@ object Logger {
     ) = processor.log(level, message, preFormattedMessage, category, channels, throwable, parameters, DEFAULT_STACK_DEPTH, meta)
 
     @JvmStatic
-    fun v(message: () -> String) = logLazily(Level.VERBOSE, DEFAULT_CATEGORY, null, message)
-
-    @JvmStatic
-    fun v(category: Category, message: () -> String) = logLazily(Level.VERBOSE, category, null, message)
-
-    @JvmStatic
-    fun d(message: () -> String) = logLazily(Level.DEBUG, DEFAULT_CATEGORY, null, message)
-
-    @JvmStatic
-    fun d(category: Category, message: () -> String) = logLazily(Level.DEBUG, category, null, message)
-
-    @JvmStatic
-    fun i(message: () -> String) = logLazily(Level.INFO, DEFAULT_CATEGORY, null, message)
-
-    @JvmStatic
-    fun i(category: Category, message: () -> String) = logLazily(Level.INFO, category, null, message)
-
-    @JvmStatic
-    fun w(message: () -> String) = logLazily(Level.WARN, DEFAULT_CATEGORY, null, message)
-
-    @JvmStatic
-    fun w(category: Category, message: () -> String) = logLazily(Level.WARN, category, null, message)
-
-    @JvmStatic
-    fun w(category: Category, throwable: Throwable?, message: () -> String) =
-        logLazily(Level.WARN, category, throwable, message)
-
-    @JvmStatic
-    fun e(message: () -> String) = logLazily(Level.ERROR, DEFAULT_CATEGORY, null, message)
-
-    @JvmStatic
-    fun e(category: Category, message: () -> String) = logLazily(Level.ERROR, category, null, message)
-
-    @JvmStatic
-    fun e(category: Category, throwable: Throwable?, message: () -> String) =
-        logLazily(Level.ERROR, category, throwable, message)
-
-    private fun logLazily(level: Level, category: Category, throwable: Throwable?, message: () -> String) {
-        if (processor.mightPrint(level, category, DEFAULT_CHANNEL_LIST)) {
-            processor.log(level, message(), false, category, DEFAULT_CHANNEL_LIST, throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
-        }
-    }
-
-    @JvmStatic
     @Deprecated("Method moved into Log.Setup")
     fun addChannels(vararg channels: Channel) {
         processor.addChannels(channels.toList())

@@ -16,8 +16,6 @@
 
 package sh.vcm.sensiblelogging.filter
 
-import sh.vcm.sensiblelogging.Category
-import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 
 class CombineFilters(private val first: Filter, private val second: Filter) {
@@ -25,19 +23,11 @@ class CombineFilters(private val first: Filter, private val second: Filter) {
         override fun matches(line: Line): Boolean {
             return first.matches(line) || second.matches(line)
         }
-
-        override fun mightMatch(level: Level, category: Category): Boolean {
-            return first.mightMatch(level, category) || second.mightMatch(level, category)
-        }
     }
 
     fun toRequireBoth() = object : Filter {
         override fun matches(line: Line): Boolean {
             return first.matches(line) && second.matches(line)
-        }
-
-        override fun mightMatch(level: Level, category: Category): Boolean {
-            return first.mightMatch(level, category) && second.mightMatch(level, category)
         }
     }
 }

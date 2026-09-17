@@ -142,12 +142,6 @@ object Categories {
  Logger.d("Initialising the flux capacitor", Categories.Default, Channels.LogCat)
 ```
 
-When a message is expensive to build, pass it as a lambda. It is only evaluated when at least one channel might print it,
-based on `Filter.mightMatch(level, category)`:
-```kotlin
- Logger.d(Categories.Network) { "Response body: ${response.body}" }
-```
-
 ### Step 3
 Build your own Channels, Filters & Formatters to solve your project needs.
 

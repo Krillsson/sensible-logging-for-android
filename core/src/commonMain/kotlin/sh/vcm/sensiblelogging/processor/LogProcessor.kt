@@ -57,11 +57,6 @@ internal class LogProcessor {
         }
     }
 
-    fun mightPrint(level: Level, category: Category, channels: List<Int>): Boolean =
-        channelsArray.any { channel ->
-            (channel.default || channels.contains(channel.id)) && channel.filter.mightMatch(level, category)
-        }
-
     fun log(
         level: Level,
         message: String,
