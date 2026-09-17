@@ -167,8 +167,75 @@ Logger.Setup.addChannels(channels)
 ```
 
 `Meta` is only fully populated on the JVM. On Apple targets, only the thread name is available, unless you
-pass `Meta` yourself with `Logger.log(level, message, preFormattedMessage, meta, ...)`, for example from Swift where the
-file, function and line are known at the call site.
+pass `Meta` yourself with `Logger.log(level, message, preFormattedMessage, meta, ...)`.
+
+#### Logging from Swift
+Kotlin default arguments and value classes don't carry over to Swift, so `Logger` is awkward to call from Swift and can't
+see the call site. `SwiftLogger.log` is meant to be wrapped by a few lines of Swift that capture `#fileID`, `#function`
+and `#line`, which then end up in `Meta`. It is hidden from Swift autocomplete as `__log`.
+
+Export the library from your framework so `SwiftLogger` and `Level` are in its header:
+
+```kotlin
+iosTarget.binaries.framework {
+    export("sh.vcm.sensiblelogging:sensible-logging-core:<version>")
+}
+```
+
+Then add this to your iOS app, replacing `Shared` with the name of your framework:
+
+```swift
+import Shared
+
+enum Log {
+    static func v(_ message: String, category: String = "Default", parameters: [String: String] = [:],
+                  file: String = #fileID, function: String = #function, line: Int = #line) {
+        write(.verbose, message, category, parameters, file, function, line)
+    }
+
+    static func d(_ message: String, category: String = "Default", parameters: [String: String] = [:],
+                  file: String = #fileID, function: String = #function, line: Int = #line) {
+        write(.debug, message, category, parameters, file, function, line)
+    }
+
+    static func i(_ message: String, category: String = "Default", parameters: [String: String] = [:],
+                  file: String = #fileID, function: String = #function, line: Int = #line) {
+        write(.info, message, category, parameters, file, function, line)
+    }
+
+    static func w(_ message: String, error: (any Error)? = nil, category: String = "Default",
+                  parameters: [String: String] = [:],
+                  file: String = #fileID, function: String = #function, line: Int = #line) {
+        write(.warn, message, category, parameters.adding(error), file, function, line)
+    }
+
+    static func e(_ message: String, error: (any Error)? = nil, category: String = "Default",
+                  parameters: [String: String] = [:],
+                  file: String = #fileID, function: String = #function, line: Int = #line) {
+        write(.error, message, category, parameters.adding(error), file, function, line)
+    }
+
+    private static func write(_ level: Level, _ message: String, _ category: String, _ parameters: [String: String],
+                              _ file: String, _ function: String, _ line: Int) {
+        SwiftLogger.shared.__log(level: level, message: message, category: category, parameters: parameters,
+                                 fileId: file, function: function, line: Int32(line))
+    }
+}
+
+private extension Dictionary where Key == String, Value == String {
+    func adding(_ error: (any Error)?) -> [String: String] {
+        guard let error else { return self }
+        var parameters = self
+        parameters["error"] = String(describing: error)
+        return parameters
+    }
+}
+```
+
+```swift
+Log.d("Loaded \(servers.count) servers", category: "Network")
+Log.e("Could not connect", error: error, category: "Network")
+```
 
 Download
 --------
