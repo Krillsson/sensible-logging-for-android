@@ -154,6 +154,26 @@ your debug UI. Or provide a shortcut from your app settings to dump the database
 
 Want to control the log categories in runtime? Use the `SharedPreferencesCategoryFilter` with your `LogCatChannel` and enable updating of it from your debug UI.
 
+### Kotlin Multiplatform
+`sensible-logging-core` supports `jvm`, `iosArm64`, `iosSimulatorArm64` and `macosArm64`, so you can log from `commonMain`.
+On Apple targets, use `addNSLogChannel` instead of `addLogCatChannel`:
+
+```kotlin
+// in iosMain / appleMain
+val channels = Logger.Setup.Configuration()
+    .addNSLogChannel(filter = Filter.level(Level.DEBUG))
+    .create()
+Logger.Setup.addChannels(channels)
+```
+
+`Meta` is only fully populated on the JVM. On Apple targets, only the thread name is available, unless you
+pass `Meta` yourself with `Logger.log(level, message, preFormattedMessage, meta, ...)`, for example from Swift where the
+file, function and line are known at the call site.
+
+Swift errors are not Kotlin `Throwable`s. Use `NSError.asThrowable()` to pass one as `throwable`. It wraps the error in
+`NSErrorException`, which keeps the original `NSError` for channels that want it, for example to report it to a crash
+reporter with its domain and code. An `NSError` that Kotlin created from an exception is turned back into that exception.
+
 Download
 --------
 
@@ -165,7 +185,7 @@ repositories {
 
 // in your app build.gradle
 dependencies {
-  implementation 'sh.vcm.sensiblelogging:sensible-logging-core:2.1.1'      // pure JVM core, e.g. Logger, Channel, Filter, Formatter
+  implementation 'sh.vcm.sensiblelogging:sensible-logging-core:2.1.1'      // Kotlin Multiplatform core, e.g. Logger, Channel, Filter, Formatter
   implementation 'sh.vcm.sensiblelogging:sensible-logging-android:2.1.1'   // Android integrations, e.g. LogCatChannel, SharedPreferencesCategoryFilter
   implementation 'sh.vcm.sensiblelogging:sensible-logging-lifecycle:2.1.1' // AndroidX Lifecycle-based logging helpers
 }
@@ -174,8 +194,8 @@ dependencies {
 ## Requirements
 
  - `minSdk` is currently set to `16`
- - `sensible-logging-core` is plain Kotlin/JVM (no Android SDK dependency), so it can be used from
-   non-Android JVM modules too
+ - `sensible-logging-core` is Kotlin Multiplatform (JVM, iOS and macOS) with no Android SDK dependency, so it can
+   be used from non-Android JVM modules and `commonMain` too
  - `sensible-logging-android` (Android-specific channels/filters, e.g. `LogCatChannel`) is only dependent on
    the Android SDK and kotlin stdlib
  - `sensible-logging-lifecycle` is dependent on `androidx.appcompat` and `androidx.lifecycle` libraries

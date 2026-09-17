@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+- `sensible-logging-core` is now a Kotlin Multiplatform library targeting `jvm`, `iosArm64`, `iosSimulatorArm64` and
+  `macosArm64`. The JVM API is unchanged. Apple targets get an `NSLogChannel` and `addNSLogChannel`.
+- Added a `Logger.log` overload that takes `Meta` instead of reading it from the stack.
+- Added `NSError.asThrowable()` and `NSErrorException` on Apple targets for logging Swift and Objective-C errors.
+
 ## [2.1.1] 2026-08-26
 
  - No code changes compared to 2.1.0. This release is to fix maven central publishing 
