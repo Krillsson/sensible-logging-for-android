@@ -170,6 +170,10 @@ Logger.Setup.addChannels(channels)
 pass `Meta` yourself with `Logger.log(level, message, preFormattedMessage, meta, ...)`, for example from Swift where the
 file, function and line are known at the call site.
 
+Swift errors are not Kotlin `Throwable`s. Use `NSError.asThrowable()` to pass one as `throwable`. It wraps the error in
+`NSErrorException`, which keeps the original `NSError` for channels that want it, for example to report it to a crash
+reporter with its domain and code. An `NSError` that Kotlin created from an exception is turned back into that exception.
+
 Download
 --------
 
