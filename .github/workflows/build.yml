@@ -48,6 +48,16 @@ jobs:
         HEADER=core/build/bin/macosArm64/debugFramework/SensibleLogging.framework/Headers/SensibleLogging.h
         grep -nE "LoggerBridge|swift_private|SWIFT_NAME\\(Logger|SWIFT_NAME\\(Level|Configuration|AllowAllFilter|SimpleFormatter|addStandardOutChannel|addChannels" "$HEADER"
 
+    - name: Probe the exported Swift names
+      run: |
+        FRAMEWORK_DIR=core/build/bin/macosArm64/debugFramework
+        for CAND in '__log(level: .debug' '__logLevel(.debug' '__logLevel(level: .debug' 'log(level: .debug' 'logLevel(.debug'; do
+          printf 'import Foundation\nimport SensibleLogging\nfunc probe() {\n  LoggerBridge.shared.%s, message: "m", category: "c", error: nil, parameters: [:], fileId: "f", function: "fn", line: 1)\n}\n' "$CAND" > probe.swift
+          if swiftc -typecheck -F "$FRAMEWORK_DIR" probe.swift 2>probe.err; then echo "PROBE WORKS: $CAND"; else echo "PROBE FAILS: $CAND"; grep -m1 "error:" probe.err; fi
+        done
+        printf 'import Foundation\nimport SensibleLogging\nenum Logger {}\nfunc probe2() {\n  let c = SensibleLogging.Logger.SetupConfiguration()\n  _ = c.addStandardOutChannel(filter: AllowAllFilter.shared, formatter: SimpleFormatter.shared, default: true)\n  SensibleLogging.Logger.Setup.shared.addChannels(channels: c.create())\n}\n' > probe2.swift
+        if swiftc -typecheck -F "$FRAMEWORK_DIR" probe2.swift 2>probe2.err; then echo "PROBE WORKS: shadowed Logger + qualified setup"; else echo "PROBE FAILS: shadowed Logger + qualified setup"; grep -m3 "error:" probe2.err; fi
+
     - name: Compile and run the Swift sample
       run: |
         FRAMEWORK_DIR=core/build/bin/macosArm64/debugFramework
