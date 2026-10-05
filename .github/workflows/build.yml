@@ -43,6 +43,11 @@ jobs:
     - name: Build the macOS framework
       run: ./gradlew :core:linkDebugFrameworkMacosArm64
 
+    - name: Inspect the framework header
+      run: |
+        HEADER=core/build/bin/macosArm64/debugFramework/SensibleLogging.framework/Headers/SensibleLogging.h
+        grep -nE "LoggerBridge|swift_private|SWIFT_NAME\\(Logger|SWIFT_NAME\\(Level|Configuration|AllowAllFilter|SimpleFormatter|addStandardOutChannel|addChannels" "$HEADER"
+
     - name: Compile and run the Swift sample
       run: |
         FRAMEWORK_DIR=core/build/bin/macosArm64/debugFramework
