@@ -9,7 +9,11 @@ kotlin {
     jvm()
     iosArm64()
     iosSimulatorArm64()
-    macosArm64()
+    macosArm64 {
+        binaries.framework {
+            baseName = "SensibleLogging"
+        }
+    }
 
     sourceSets {
         commonTest.dependencies {
