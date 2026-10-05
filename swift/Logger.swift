@@ -33,8 +33,8 @@ enum Logger {
     private static func write(_ level: Level, _ message: String, _ category: String, _ error: Error?,
                               _ parameters: [String: String],
                               _ file: String, _ function: String, _ line: Int) {
-        LoggerBridge.shared.__log(level: level, message: message, category: category,
-                                  error: error as NSError?, parameters: parameters,
-                                  fileId: file, function: function, line: Int32(line))
+        LoggerBridge.shared.__logLevel(level, message: message, category: category,
+                                       error: error as NSError?, parameters: parameters,
+                                       fileId: file, function: function, line: Int32(line))
     }
 }

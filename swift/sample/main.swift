@@ -6,9 +6,9 @@ enum SampleError: Error {
 }
 
 func run() {
-    let configuration = LoggerSetupConfiguration()
+    let configuration = SensibleLogging.Logger.SetupConfiguration()
     configuration.addStandardOutChannel(filter: AllowAllFilter.shared, formatter: SimpleFormatter.shared, default: true)
-    LoggerSetup.shared.addChannels(channels: configuration.create())
+    SensibleLogging.Logger.Setup.shared.addChannels(channels: configuration.create())
 
     Logger.d("hello from swift", category: "Network", parameters: ["host": "nas.local"])
     Logger.w("could not connect", error: SampleError.timedOut, category: "Network")
