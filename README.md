@@ -174,6 +174,37 @@ Swift errors are not Kotlin `Throwable`s. Use `NSError.asThrowable()` to pass on
 `NSErrorException`, which keeps the original `NSError` for channels that want it, for example to report it to a crash
 reporter with its domain and code. An `NSError` that Kotlin created from an exception is turned back into that exception.
 
+#### Logging from Swift
+Kotlin default arguments and value classes don't survive the Objective-C export, so `Logger` itself is awkward to call
+from Swift and can't see the Swift call site. `LoggerBridge` exists to be wrapped by a small Swift file, which passes
+`#fileID`, `#function` and `#line` so they end up in `Meta`. It is refined in Swift, which both keeps it out of
+autocomplete and renames it, so the wrapper calls `__logLevel(_:message:category:error:parameters:fileId:function:line:)`.
+
+[`swift/Logger.swift`](swift/Logger.swift) is that wrapper. A Kotlin library can't ship Swift code, so it has to be
+compiled in a Swift module that can see your framework: either put it in your framework module's `src/appleMain/swift`
+if you use [SKIE's Swift code bundling](https://skie.touchlab.co/features/swift-code-bundling), where no import is
+needed, or add it to your iOS app target and change its `import` to the name of your framework.
+
+It declares `enum Logger`, which shadows the exported Kotlin `Logger` inside your own module, so Swift call sites read
+the same way Kotlin ones do. Reach the Kotlin object as `<YourFramework>.Logger` when you need it, which is also how its
+nested types are spelled: `<YourFramework>.Logger.Setup`, `<YourFramework>.Logger.SetupConfiguration`.
+
+```swift
+Logger.d("Loaded \(servers.count) servers", category: "Network")
+Logger.e("Could not connect", error: error, category: "Network")
+```
+
+Export the library from your framework so `LoggerBridge` and `Level` end up in its header:
+
+```kotlin
+iosTarget.binaries.framework {
+    export("sh.vcm.sensiblelogging:sensible-logging-core:<version>")
+}
+```
+
+`swift/sample/main.swift` is the same wrapper compiled and run against the macOS framework in CI, which is what keeps
+the Swift side honest.
+
 Download
 --------
 

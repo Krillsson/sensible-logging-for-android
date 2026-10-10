@@ -39,3 +39,20 @@ jobs:
 
     - name: Run Apple tests
       run: ./gradlew :core:macosArm64Test :core:iosSimulatorArm64Test
+
+    - name: Build the macOS framework
+      run: ./gradlew :core:linkDebugFrameworkMacosArm64
+
+    - name: Compile and run the Swift sample
+      run: |
+        FRAMEWORK_DIR=core/build/bin/macosArm64/debugFramework
+        swiftc -F "$FRAMEWORK_DIR" -framework SensibleLogging \
+          -Xlinker -rpath -Xlinker "@executable_path/$FRAMEWORK_DIR" \
+          swift/Logger.swift swift/sample/main.swift -o swift-sample
+        ./swift-sample > swift-sample.log 2>&1
+        cat swift-sample.log
+        grep -q "main.swift:run()" swift-sample.log
+        grep -q "\[DEBUG\] \[Network\]" swift-sample.log
+        grep -q "host\]:nas.local" swift-sample.log
+        grep -q "exception\[sample failure\]" swift-sample.log
+        grep -q "main.SampleError" swift-sample.log
