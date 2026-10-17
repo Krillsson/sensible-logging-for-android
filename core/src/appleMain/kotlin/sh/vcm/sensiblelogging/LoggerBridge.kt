@@ -41,7 +41,7 @@ object LoggerBridge {
             message = message,
             preFormattedMessage = false,
             meta = metaFromSourceLocation(fileId, function, line, currentThreadName()),
-            category = Category(category),
+            category = category,
             throwable = error?.asThrowable(),
             parameters = parameters
         )

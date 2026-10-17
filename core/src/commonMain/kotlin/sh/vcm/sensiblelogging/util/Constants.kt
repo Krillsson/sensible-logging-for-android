@@ -19,7 +19,7 @@ package sh.vcm.sensiblelogging.util
 import sh.vcm.sensiblelogging.Category
 
 object Constants {
-    val DEFAULT_CATEGORY = Category("Default")
+    const val DEFAULT_CATEGORY: Category = "Default"
     internal val DEFAULT_CHANNELS = IntArray(0)
     internal val DEFAULT_CHANNEL_LIST = DEFAULT_CHANNELS.asList()
     internal val EMPTY_PARAMS: Map<String, String> = emptyMap()

@@ -8,6 +8,9 @@
 - Added `NSError.asThrowable()` and `NSErrorException` on Apple targets for logging Swift and Objective-C errors.
 - Added `LoggerBridge` for Apple targets, plus `swift/Logger.swift` to copy into an iOS app, so Swift log calls carry
   their file, function and line.
+- *BREAKING*: `Category` is now a `typealias` for `String` instead of a value class, so it reads as a `String` from
+  Swift and Java. Existing Kotlin call sites keep compiling: `Category("UI")` and `category.name` are deprecated and
+  return the string itself. Libraries compiled against an older version need to be recompiled.
 
 ## [2.1.1] 2026-08-26
 

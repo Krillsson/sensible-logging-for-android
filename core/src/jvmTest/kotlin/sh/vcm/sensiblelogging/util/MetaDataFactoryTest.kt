@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.Logger
 import sh.vcm.sensiblelogging.Meta
@@ -35,7 +34,7 @@ internal class MetaDataFactoryTest {
         Logger.Setup.addChannels(listOf(channel))
 
         // WHEN
-        Logger.d("Something happened", Category("UnitTest"))
+        Logger.d("Something happened", "UnitTest")
 
         // THEN
         val meta = channel.metas.single()

@@ -27,9 +27,9 @@ import sh.vcm.sensiblelogging.channel.LogCatChannel
  * Should be performed in the onCreate() method of Application lifecycle
  */
 fun Application.registerLifecycleLoggers(
-    processCategory: Category = Category(TYPE_PROCESS),
-    activityCategory: Category = Category(TYPE_ACTIVITY),
-    fragmentCategory: Category = Category(TYPE_FRAGMENT),
+    processCategory: Category = TYPE_PROCESS,
+    activityCategory: Category = TYPE_ACTIVITY,
+    fragmentCategory: Category = TYPE_FRAGMENT,
     channel: Int = LogCatChannel.ID,
     separator: String = DEFAULT_SEPARATOR
 ) {
@@ -60,7 +60,7 @@ fun Application.registerLifecycleLoggers(
  * Should be performed in the onCreate() method of Service lifecycle
  */
 fun LifecycleService.registerLifecycleLogger(
-    category: Category = Category(TYPE_SERVICE),
+    category: Category = TYPE_SERVICE,
     channel: Int,
     separator: String = DEFAULT_SEPARATOR
 ) {
@@ -75,7 +75,7 @@ fun LifecycleService.registerLifecycleLogger(
 }
 
 fun Lifecycle.registerLifecycleLogger(
-    category: Category = Category(TYPE_LIFECYCLE),
+    category: Category = TYPE_LIFECYCLE,
     channel: Int,
     identifier: String,
     separator: String = DEFAULT_SEPARATOR
