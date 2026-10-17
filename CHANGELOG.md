@@ -6,8 +6,8 @@
   `macosArm64`. The JVM API is unchanged. Apple targets get an `NSLogChannel` and `addNSLogChannel`.
 - Added a `Logger.log` overload that takes `Meta` instead of reading it from the stack.
 - Added `NSError.asThrowable()` and `NSErrorException` on Apple targets for logging Swift and Objective-C errors.
-- Added `LoggerBridge` for Apple targets, plus `swift/Logger.swift` to copy into an iOS app, so Swift log calls carry
-  their file, function and line.
+- Added `LoggerBridge` for Apple targets, plus `swift/Logger.swift`, a Swift extension on `Logger` to copy into an iOS app, so
+  Swift log calls carry their file, function and line.
 - *BREAKING*: `Category` is now a `typealias` for `String` instead of a value class, so it reads as a `String` from
   Swift and Java. Existing Kotlin call sites keep compiling: `Category("UI")` and `category.name` are deprecated and
   return the string itself. Libraries compiled against an older version need to be recompiled.
