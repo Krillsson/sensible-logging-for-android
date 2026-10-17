@@ -37,7 +37,7 @@ class NSLogChannel(
 
     override fun print(line: Line, meta: Meta) {
         val formattedMessage = if (line.preFormatted) line.message else formatter.format(line, meta)
-        val stackTrace = line.throwable?.let { "\n${it.stackTraceToString()}" } ?: ""
-        NSLog("%@", "[${line.level.name}] $formattedMessage$stackTrace")
+        // NSLog reads its first argument as a format string, so a % in the message has to be escaped
+        NSLog(formattedMessage.replace("%", "%%"))
     }
 }
