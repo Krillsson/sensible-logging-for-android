@@ -56,3 +56,4 @@ jobs:
         grep -q "host\]:nas.local" swift-sample.log
         grep -q "exception\[sample failure\]" swift-sample.log
         grep -q "main.SampleError" swift-sample.log
+        ! grep -q "filtered out by category" swift-sample.log
