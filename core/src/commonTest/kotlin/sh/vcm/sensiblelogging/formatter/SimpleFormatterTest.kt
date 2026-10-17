@@ -1,6 +1,5 @@
 package sh.vcm.sensiblelogging.formatter
 
-import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.util.currentTimeMillis
@@ -14,7 +13,7 @@ internal class SimpleFormatterTest {
         // GIVEN
         val line = Line(
             currentTimeMillis(),
-            Category("UnitTest"),
+            "UnitTest",
             Level.WARN,
             "Something happened",
             false,
@@ -35,7 +34,7 @@ internal class SimpleFormatterTest {
         // GIVEN
         val line = Line(
             currentTimeMillis(),
-            Category("UnitTest"),
+            "UnitTest",
             Level.ERROR,
             "Something happened",
             false,

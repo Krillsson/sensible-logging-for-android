@@ -45,7 +45,7 @@ internal class LoggerBridgeTest {
         // THEN
         val (line, meta) = channel.entries.single()
         assertEquals(Level.WARN, line.level)
-        assertEquals(Category("Network"), line.category)
+        assertEquals("Network", line.category)
         assertEquals("Could not connect", line.message)
         assertEquals(mapOf("host" to "nas.local"), line.parameters)
         assertEquals("sample failure", assertIs<NSErrorException>(line.throwable).message)

@@ -2,13 +2,12 @@ package sh.vcm.sensiblelogging.filter
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 
 class SimpleCategoryFilterTest {
-    private val firstCategory = Category("First")
-    private val secondCategory = Category("Second")
+    private val firstCategory = "First"
+    private val secondCategory = "Second"
 
     @Test
     internal fun `does not pass non-included category`() {
