@@ -16,11 +16,15 @@
 
 package sh.vcm.sensiblelogging
 
+/**
+ * Where a line was logged from. A field is null when the platform can't tell, for example in an Apple release build,
+ * whose stack trace has no symbol names.
+ */
 data class Meta(
-    val className: String,
-    val simpleClassName: String,
-    val functionName: String,
-    val lineNumber: Int,
-    val threadName: String,
-    val fileName: String
+    val className: String?,
+    val simpleClassName: String?,
+    val functionName: String?,
+    val lineNumber: Int?,
+    val threadName: String?,
+    val fileName: String?
 )

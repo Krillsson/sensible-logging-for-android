@@ -39,7 +39,7 @@ internal class MetaDataFactoryTest {
         // THEN
         val meta = channel.metas.single()
         assertEquals("MetaDataFactoryTest", meta.simpleClassName)
-        assertTrue(meta.functionName.startsWith("should point meta at the function calling the logger"), meta.functionName)
+        assertTrue(meta.functionName.orEmpty().startsWith("should point meta at the function calling the logger"), meta.functionName)
         assertEquals("MetaDataFactoryTest.kt", meta.fileName)
         assertEquals(Thread.currentThread().name, meta.threadName)
     }

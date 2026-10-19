@@ -19,7 +19,7 @@ package sh.vcm.sensiblelogging.util
 
 import sh.vcm.sensiblelogging.Meta
 
-internal fun metaFromSourceLocation(fileId: String, function: String, line: Int, threadName: String): Meta {
+internal fun metaFromSourceLocation(fileId: String, function: String, line: Int, threadName: String?): Meta {
     val fileName = fileId.substringAfterLast('/')
     val simpleClassName = fileName.substringBeforeLast('.')
     val module = fileId.substringBefore('/', missingDelimiterValue = "")

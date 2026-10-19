@@ -52,7 +52,7 @@ internal class LoggerBridgeTest {
         assertEquals("ServerListView.swift", meta.fileName)
         assertEquals("body", meta.functionName)
         assertEquals(42, meta.lineNumber)
-        assertTrue(meta.threadName.isNotEmpty())
+        assertTrue(meta.threadName.orEmpty().isNotEmpty())
     }
 
     private class RecordingDebugChannel : DebugChannel() {

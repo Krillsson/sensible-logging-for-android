@@ -26,10 +26,16 @@ object SimpleFormatter : Formatter {
         val stackTrace = line.throwable?.let {
             " exception[${it.message}]\n${it.stackTraceToString()}"
         } ?: ""
-        return if (meta != null){
-            "${formatTimestamp(line.timestamp)} [${line.level.name}] [${line.category}] ${meta.threadName} ${meta.fileName}:${meta.functionName}    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
-        } else {
-            "${formatTimestamp(line.timestamp)} [${line.level.name}] [${line.category}]    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
-        }
+        val header = listOfNotNull(
+            formatTimestamp(line.timestamp),
+            "[${line.level.name}]",
+            "[${line.category}]",
+            meta?.threadName,
+            meta?.let(::fileAndFunction)
+        ).joinToString(" ")
+        return "$header    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
     }
+
+    private fun fileAndFunction(meta: Meta): String? =
+        listOfNotNull(meta.fileName, meta.functionName).joinToString(":").ifEmpty { null }
 }

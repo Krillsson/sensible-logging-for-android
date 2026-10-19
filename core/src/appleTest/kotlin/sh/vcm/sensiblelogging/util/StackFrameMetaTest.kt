@@ -70,7 +70,7 @@ internal class StackFrameMetaTest {
         val meta = metaFromStackFrame(frame, "main")
 
         // THEN
-        assertEquals(Meta("com.example.ServerList", "ServerList", "refresh", 0, "main", "n/a"), meta)
+        assertEquals(Meta("com.example.ServerList", "ServerList", "refresh", null, "main", null), meta)
     }
 
     @Test

@@ -40,7 +40,7 @@ internal fun callSiteFrame(frames: Array<String>, extraFrames: Int): String? {
  * `kfun:com.example.Foo#bar(){} + 52 (/src/com/example/Foo.kt:12:5)`.
  * The source location is only there when the binary was built with debug info.
  */
-internal fun metaFromStackFrame(frame: String, threadName: String): Meta? {
+internal fun metaFromStackFrame(frame: String, threadName: String?): Meta? {
     val symbol = SYMBOL.find(frame)?.groupValues?.get(1) ?: return null
     val name = symbol.substringBefore('(')
     val owner = name.substringBefore('#')
@@ -52,10 +52,10 @@ internal fun metaFromStackFrame(frame: String, threadName: String): Meta? {
         owner to member
     }
     val location = SOURCE_LOCATION.find(frame)?.groupValues
-    val fileName = location?.get(1)?.substringAfterLast('/') ?: NOT_AVAILABLE
+    val fileName = location?.get(1)?.substringAfterLast('/')
     // Top level functions are owned by their package, which starts with a lower case letter
     val isTopLevel = declaringName.substringAfterLast('.').firstOrNull()?.isLowerCase() == true
-    val className = if (isTopLevel && fileName != NOT_AVAILABLE) {
+    val className = if (isTopLevel && fileName != null) {
         "$declaringName.${fileName.substringBeforeLast('.')}Kt"
     } else {
         declaringName
@@ -64,7 +64,7 @@ internal fun metaFromStackFrame(frame: String, threadName: String): Meta? {
         className = className,
         simpleClassName = className.substringAfterLast('.'),
         functionName = functionName.substringBefore("__at__"),
-        lineNumber = location?.get(2)?.toIntOrNull() ?: 0,
+        lineNumber = location?.get(2)?.toIntOrNull(),
         threadName = threadName,
         fileName = fileName
     )

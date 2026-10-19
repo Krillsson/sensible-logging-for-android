@@ -22,15 +22,16 @@ Depending on your use-case, either implement a subtype of `ReleaseChannel` or `D
  - `DebugChannel`s are meant to be used during development. Additional to the log-line, it includes the following information:
  ```kotlin
 data class Meta(
-    val className: String,
-    val simpleClassName: String,
-    val functionName: String,
-    val lineNumber: Int,
-    val threadName: String,
-    val fileName: String
+    val className: String?,
+    val simpleClassName: String?,
+    val functionName: String?,
+    val lineNumber: Int?,
+    val threadName: String?,
+    val fileName: String?
 )
 ```
 _It retrieves this data using `Throwable().stackTrace`. Be aware that it can have negative impact to performance, so default to only use it in debug builds._
+_A field is `null` when the platform can't tell, and the built-in formatters leave it out._
  
 - `ReleaseChannel`s only include the log-line and are meant to be used in release-builds.
 
@@ -246,7 +247,7 @@ Logger.Setup.addChannels(channels)
 ```
 
 `Meta` is read from the stack trace on every target. On Apple targets the stack trace only has symbol names and source
-locations in debug builds, so release builds get `n/a` for everything but the thread name. Swift doesn't need the stack
+locations in debug builds, so release builds only get the thread name. Swift doesn't need the stack
 trace: the Swift wrapper below passes the file, function and line of the call site. You can also pass `Meta` yourself
 with `Logger.log(level, message, preFormattedMessage, meta, ...)`.
 

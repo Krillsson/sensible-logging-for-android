@@ -39,8 +39,8 @@ internal actual fun createMeta(stackDepth: Int): Meta {
         className = element.className,
         simpleClassName = element.className.substring(element.className.lastIndexOf('.') + 1),
         functionName = element.methodName,
-        lineNumber = element.lineNumber,
+        lineNumber = element.lineNumber.takeIf { it >= 0 },
         threadName = Thread.currentThread().name,
-        fileName = element.fileName ?: "n/a"
+        fileName = element.fileName
     )
 }

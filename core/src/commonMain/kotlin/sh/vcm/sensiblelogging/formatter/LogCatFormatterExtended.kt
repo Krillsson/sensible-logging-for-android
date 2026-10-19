@@ -27,20 +27,26 @@ object LogCatFormatterExtended : Formatter {
     private const val messageMaxLength = 64
 
     override fun format(line: Line, meta: Meta?): String {
-        return if(meta != null) {
-            "${formatCategories(line)} -- ${threadName(meta)} : ${fileAndFunction(meta)} : ${message(line, line.parameters.isNotEmpty())}${formatParameters(line)?.let { " : $it" } ?: ""}"
-        } else {
-            "${formatCategories(line)} -- ${message(line, line.parameters.isNotEmpty())}${formatParameters(line)?.let { " : $it" } ?: ""}"
-        }
+        val sections = listOfNotNull(
+            meta?.let(::threadName),
+            meta?.let(::fileAndFunction),
+            message(line, line.parameters.isNotEmpty())
+        )
+        return "${formatCategories(line)} -- ${sections.joinToString(" : ")}${formatParameters(line)?.let { " : $it" } ?: ""}"
     }
 
     private fun message(line: Line, normalizeLength: Boolean) =
         if (normalizeLength) line.message.normalizeLength(messageMaxLength) else line.message
 
-    private fun threadName(meta: Meta) = "[${meta.threadName.normalizeLength(characterCount = threadMaxLength, normalizationAlignment = NormalizationAlignment.Right)}]"
+    private fun threadName(meta: Meta): String? = meta.threadName?.let {
+        "[${it.normalizeLength(characterCount = threadMaxLength, normalizationAlignment = NormalizationAlignment.Right)}]"
+    }
 
-    private fun fileAndFunction(meta: Meta) =
-        "${meta.fileName}:${meta.lineNumber}${meta.functionName.asMethodOrFunction()}".normalizeLength(fileAndFunctionMaxLength)
+    private fun fileAndFunction(meta: Meta): String? {
+        val fileAndLine = meta.fileName?.let { fileName -> meta.lineNumber?.let { "$fileName:$it" } ?: fileName }
+        val function = meta.functionName?.asMethodOrFunction(qualified = fileAndLine != null)
+        return listOfNotNull(fileAndLine, function).joinToString("").ifEmpty { null }?.normalizeLength(fileAndFunctionMaxLength)
+    }
 
     private fun formatParameters(line: Line): String? =
         line.parameters.takeIf { it.isNotEmpty() }?.entries?.joinToString { "${it.key}=\"${it.value}\"" }
@@ -74,5 +80,9 @@ object LogCatFormatterExtended : Formatter {
         }
     }
 
-    private fun String.asMethodOrFunction() = if (this.contains("lambda")) " () -> {}" else ".$this(…)"
+    private fun String.asMethodOrFunction(qualified: Boolean) = when {
+        contains("lambda") -> " () -> {}"
+        qualified -> ".$this(…)"
+        else -> "$this(…)"
+    }
 }

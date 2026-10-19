@@ -50,7 +50,7 @@ internal class LoggerTest {
         Logger.d("Something happened", category)
 
         // THEN
-        assertTrue(channel.metas.single().threadName.isNotEmpty())
+        assertTrue(channel.metas.single().threadName.orEmpty().isNotEmpty())
     }
 
     @Test

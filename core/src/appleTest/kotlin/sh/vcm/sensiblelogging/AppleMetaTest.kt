@@ -31,7 +31,7 @@ internal class AppleMetaTest {
         assertEquals("AppleMetaTest", meta.simpleClassName)
         assertEquals("should point meta at the function calling the logger", meta.functionName)
         assertEquals("AppleMetaTest.kt", meta.fileName)
-        assertTrue(meta.lineNumber > 0)
+        assertTrue((meta.lineNumber ?: 0) > 0)
     }
 
     @Test

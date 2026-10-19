@@ -62,7 +62,7 @@ internal actual fun printToStandardError(message: String) {
 
 /**
  * Reads the call site from the stack trace. Kotlin/Native only has symbol names and source locations in it for debug
- * binaries, so release builds get `n/a` for everything but the thread name.
+ * binaries, so release builds only get the thread name.
  */
 @OptIn(ExperimentalNativeApi::class)
 internal actual fun createMeta(stackDepth: Int): Meta {
@@ -74,18 +74,16 @@ internal actual fun createMeta(stackDepth: Int): Meta {
         ?: unknownMeta(threadName)
 }
 
-private fun unknownMeta(threadName: String) = Meta(
-    className = NOT_AVAILABLE,
-    simpleClassName = NOT_AVAILABLE,
-    functionName = NOT_AVAILABLE,
-    lineNumber = 0,
+private fun unknownMeta(threadName: String?) = Meta(
+    className = null,
+    simpleClassName = null,
+    functionName = null,
+    lineNumber = null,
     threadName = threadName,
-    fileName = NOT_AVAILABLE
+    fileName = null
 )
 
-internal fun currentThreadName(): String {
+internal fun currentThreadName(): String? {
     val thread = NSThread.currentThread
-    return thread.name?.takeIf { it.isNotEmpty() } ?: if (thread.isMainThread) "main" else NOT_AVAILABLE
+    return thread.name?.takeIf { it.isNotEmpty() } ?: if (thread.isMainThread) "main" else null
 }
-
-internal const val NOT_AVAILABLE = "n/a"
