@@ -74,6 +74,80 @@ To control what a `Channel` should output you pass an instance of `Filter`. You 
 would only print messages with level *error* and above, and of the category *UI*.
 If you don't care about filters, you can pass the `AllowAllFilter` to your `Channel`.
 
+#### Platform-specific filters
+A filter that reads its settings from the platform, for example which categories are switched on in your debug menu,
+can be declared once in `commonMain` and implemented per platform with `expect`/`actual`:
+
+```kotlin
+// commonMain
+internal const val ENABLED_CATEGORIES_KEY = "enabled_log_categories"
+
+expect class PersistedCategoryFilter : CategoryFilter {
+    fun setEnabled(category: Category, enabled: Boolean)
+}
+```
+
+```kotlin
+// androidMain
+actual class PersistedCategoryFilter(context: Context) : CategoryFilter() {
+
+    private val preferences = context.getSharedPreferences("logging", Context.MODE_PRIVATE)
+
+    override val categories: List<Category>
+        get() = preferences.getStringSet(ENABLED_CATEGORIES_KEY, null)?.toList() ?: listOf(DEFAULT_CATEGORY)
+
+    actual fun setEnabled(category: Category, enabled: Boolean) {
+        val updated = if (enabled) categories + category else categories - category
+        preferences.edit().putStringSet(ENABLED_CATEGORIES_KEY, updated.toSet()).apply()
+    }
+}
+```
+
+```kotlin
+// appleMain
+actual class PersistedCategoryFilter(
+    private val defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults
+) : CategoryFilter() {
+
+    override val categories: List<Category>
+        get() = defaults.stringArrayForKey(ENABLED_CATEGORIES_KEY)?.filterIsInstance<String>()
+            ?: listOf(DEFAULT_CATEGORY)
+
+    actual fun setEnabled(category: Category, enabled: Boolean) {
+        val updated = if (enabled) categories + category else categories - category
+        defaults.setObject(updated.distinct(), forKey = ENABLED_CATEGORIES_KEY)
+    }
+}
+```
+
+The constructors can differ per platform. Common code can't create the filter, but it can take one and call
+`setEnabled`. `expect`/`actual` classes are still in Beta, so the compiler warns about them unless you pass
+`-Xexpect-actual-classes`.
+
+An `actual` has to be written in Kotlin, because Kotlin can't see Swift code. If you would rather write the Apple
+side in Swift, skip `expect`/`actual`: let your shared code take a `Filter`, and implement the `Filter` protocol in
+Swift:
+
+```swift
+final class UserDefaultsCategoryFilter: NSObject, Filter {
+    private let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+    }
+
+    func matches(line: Line) -> Bool {
+        let enabled = defaults.stringArray(forKey: "enabled_log_categories") ?? [Categories.default]
+        return enabled.contains(line.category)
+    }
+}
+
+let configuration = Logger.SetupConfiguration()
+configuration.addNSLogChannel(filter: UserDefaultsCategoryFilter(), formatter: LogCatFormatterExtended.shared,
+                              default: true)
+Logger.Setup.shared.addChannels(channels: configuration.create())
+```
+
 ### Formatters
 ```kotlin
 interface Formatter {
@@ -86,23 +160,27 @@ A `Channel` uses a `Formatter` to control the format of the output. If you are d
 All log statement methods inside `Log` allow the passing of a log category. This can be used to order your statements into high level areas of interest.
 Want to know what is going on with your backend? Direct your network client log statements to the `Network` category, and enable only that category.
 
-Similar to channels, the category parameter is a string. Here we also recommend organising your categories in one file. Like so:
+`Category` is a `typealias` for `String`, so any string works as a category, from Kotlin, Java and Swift alike.
+Similar to channels, we recommend organising your categories in one file. Like so:
 
 ```kotlin
 object Categories {
-    const val Default = sh.vcm.sensiblelogging.util.Constants.DEFAULT_CATEGORY
-    const val Analytics = Category("Analytics")
-    const val Network = Category("Network")
-    const val Process = Category("Process")
-    const val Activity = Category("Activity")
-    const val Service = Category("Service")
-    const val Fragment = Category("Fragment")
-    const val RxJava = Category("RxJava")
-    const val FluxCapacitorFeature = Category("FluxCapacitorFeature")
-    const val Push = Category("Push")
-    const val UI = Category("UI")
+    const val Default: Category = sh.vcm.sensiblelogging.util.Constants.DEFAULT_CATEGORY
+    const val Analytics: Category = "Analytics"
+    const val Network: Category = "Network"
+    const val Process: Category = "Process"
+    const val Activity: Category = "Activity"
+    const val Service: Category = "Service"
+    const val Fragment: Category = "Fragment"
+    const val RxJava: Category = "RxJava"
+    const val FluxCapacitorFeature: Category = "FluxCapacitorFeature"
+    const val Push: Category = "Push"
+    const val UI: Category = "UI"
 }
 ```
+
+_`Category` used to be a value class. `Category("UI")` and `category.name` still compile, but are deprecated and
+just return the string._
 
 ## Usage
 
@@ -166,33 +244,48 @@ val channels = Logger.Setup.Configuration()
 Logger.Setup.addChannels(channels)
 ```
 
-`Meta` is only fully populated on the JVM. On Apple targets, only the thread name is available, unless you
-pass `Meta` yourself with `Logger.log(level, message, preFormattedMessage, meta, ...)`, for example from Swift where the
-file, function and line are known at the call site.
+`Meta` is read from the stack trace on every target. On Apple targets the stack trace only has symbol names and source
+locations in debug builds, so release builds get `n/a` for everything but the thread name. Swift doesn't need the stack
+trace: the Swift wrapper below passes the file, function and line of the call site. You can also pass `Meta` yourself
+with `Logger.log(level, message, preFormattedMessage, meta, ...)`.
 
 Swift errors are not Kotlin `Throwable`s. Use `NSError.asThrowable()` to pass one as `throwable`. It wraps the error in
 `NSErrorException`, which keeps the original `NSError` for channels that want it, for example to report it to a crash
 reporter with its domain and code. An `NSError` that Kotlin created from an exception is turned back into that exception.
 
 #### Logging from Swift
-Kotlin default arguments and value classes don't survive the Objective-C export, so `Logger` itself is awkward to call
-from Swift and can't see the Swift call site. `LoggerBridge` exists to be wrapped by a small Swift file, which passes
-`#fileID`, `#function` and `#line` so they end up in `Meta`. It is refined in Swift, which both keeps it out of
-autocomplete and renames it, so the wrapper calls `__logLevel(_:message:category:error:parameters:fileId:function:line:)`.
+Kotlin default arguments don't survive the Objective-C export, so `Logger` itself is awkward to call from Swift and
+can't see the Swift call site. `LoggerBridge` exists to be wrapped by a small Swift file, which passes `#fileID`,
+`#function` and `#line` so they end up in `Meta`. It is refined in Swift, which both keeps it out of autocomplete and
+renames it, so the wrapper calls `__logLevel(_:message:category:error:parameters:fileId:function:line:)`.
 
 [`swift/Logger.swift`](swift/Logger.swift) is that wrapper. A Kotlin library can't ship Swift code, so it has to be
 compiled in a Swift module that can see your framework: either put it in your framework module's `src/appleMain/swift`
 if you use [SKIE's Swift code bundling](https://skie.touchlab.co/features/swift-code-bundling), where no import is
 needed, or add it to your iOS app target and change its `import` to the name of your framework.
 
-It declares `enum Logger`, which shadows the exported Kotlin `Logger` inside your own module, so Swift call sites read
-the same way Kotlin ones do. Reach the Kotlin object as `<YourFramework>.Logger` when you need it, which is also how its
-nested types are spelled: `<YourFramework>.Logger.Setup`, `<YourFramework>.Logger.SetupConfiguration`.
+It adds static `v`, `d`, `i`, `w` and `e` functions to the exported Kotlin `Logger` in an extension, so Swift call sites
+read the same way Kotlin ones do, and `Logger.Setup` and `Logger.SetupConfiguration` are right next to them. It also
+declares `typealias Category = String`, since the Kotlin typealias doesn't make it into the header.
 
 ```swift
-Logger.d("Loaded \(servers.count) servers", category: "Network")
-Logger.e("Could not connect", error: error, category: "Network")
+Logger.d("Loaded \(servers.count) servers", category: Categories.network)
+Logger.e("Could not connect", error: error, category: Categories.network)
 ```
+
+Organise your Swift categories in one place too. A case-less `enum` is the Swift way to make a namespace that can't be
+instantiated:
+
+```swift
+enum Categories {
+    static let `default` = Constants.shared.DEFAULT_CATEGORY
+    static let network: Category = "Network"
+    static let ui: Category = "UI"
+}
+```
+
+Categories are plain strings on both sides, so a category logged from Swift is filtered the same way as one logged from
+Kotlin.
 
 Export the library from your framework so `LoggerBridge` and `Level` end up in its header:
 
@@ -202,8 +295,9 @@ iosTarget.binaries.framework {
 }
 ```
 
-`swift/sample/main.swift` is the same wrapper compiled and run against the macOS framework in CI, which is what keeps
-the Swift side honest.
+[`swift/sample/main.swift`](swift/sample/main.swift) compiles the wrapper together with the `Categories` and
+`UserDefaultsCategoryFilter` examples above and runs them against the macOS framework in CI, which is what keeps the
+Swift side honest.
 
 Download
 --------

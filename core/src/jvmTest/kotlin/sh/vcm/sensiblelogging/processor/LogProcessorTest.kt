@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.Meta
@@ -26,7 +25,7 @@ internal class LogProcessorTest {
     @MockK
     lateinit var strictFilter: Filter
 
-    private val category = Category("UnitTest")
+    private val category = "UnitTest"
 
     private lateinit var underTest: LogProcessor
 

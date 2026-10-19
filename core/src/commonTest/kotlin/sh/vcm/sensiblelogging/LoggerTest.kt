@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 
 internal class LoggerTest {
 
-    private val category = Category("UnitTest")
+    private val category = "UnitTest"
 
     @AfterTest
     internal fun tearDown() {

@@ -27,9 +27,9 @@ object SimpleFormatter : Formatter {
             " exception[${it.message}]\n${it.stackTraceToString()}"
         } ?: ""
         return if (meta != null){
-            "${formatTimestamp(line.timestamp)} [${line.level.name}] [${line.category.name}] ${meta.threadName} ${meta.fileName}:${meta.functionName}    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
+            "${formatTimestamp(line.timestamp)} [${line.level.name}] [${line.category}] ${meta.threadName} ${meta.fileName}:${meta.functionName}    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
         } else {
-            "${formatTimestamp(line.timestamp)} [${line.level.name}] [${line.category.name}]    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
+            "${formatTimestamp(line.timestamp)} [${line.level.name}] [${line.category}]    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
         }
     }
 }

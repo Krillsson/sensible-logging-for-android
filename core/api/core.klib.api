@@ -32,7 +32,7 @@ abstract interface sh.vcm.sensiblelogging.filter/Filter { // sh.vcm.sensiblelogg
 
     final object Companion { // sh.vcm.sensiblelogging.filter/Filter.Companion|null[0]
         final fun allowAll(): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/Filter.Companion.allowAll|allowAll(){}[0]
-        final fun categories(kotlin.collections/List<sh.vcm.sensiblelogging/Category>): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/Filter.Companion.categories|categories(kotlin.collections.List<sh.vcm.sensiblelogging.Category>){}[0]
+        final fun categories(kotlin.collections/List<kotlin/String>): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/Filter.Companion.categories|categories(kotlin.collections.List<kotlin.String>){}[0]
         final fun level(sh.vcm.sensiblelogging/Level): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/Filter.Companion.level|level(sh.vcm.sensiblelogging.Level){}[0]
     }
 }
@@ -72,14 +72,14 @@ abstract class sh.vcm.sensiblelogging.channel/ReleaseChannel : sh.vcm.sensiblelo
     final fun printFiltered(sh.vcm.sensiblelogging/Line) // sh.vcm.sensiblelogging.channel/ReleaseChannel.printFiltered|printFiltered(sh.vcm.sensiblelogging.Line){}[0]
 }
 
-abstract class sh.vcm.sensiblelogging.filter/CategoryFilter : sh.vcm.sensiblelogging.filter/FieldFilter<sh.vcm.sensiblelogging/Category> { // sh.vcm.sensiblelogging.filter/CategoryFilter|null[0]
+abstract class sh.vcm.sensiblelogging.filter/CategoryFilter : sh.vcm.sensiblelogging.filter/FieldFilter<kotlin/String> { // sh.vcm.sensiblelogging.filter/CategoryFilter|null[0]
     constructor <init>() // sh.vcm.sensiblelogging.filter/CategoryFilter.<init>|<init>(){}[0]
 
     abstract val categories // sh.vcm.sensiblelogging.filter/CategoryFilter.categories|{}categories[0]
-        abstract fun <get-categories>(): kotlin.collections/List<sh.vcm.sensiblelogging/Category> // sh.vcm.sensiblelogging.filter/CategoryFilter.categories.<get-categories>|<get-categories>(){}[0]
+        abstract fun <get-categories>(): kotlin.collections/List<kotlin/String> // sh.vcm.sensiblelogging.filter/CategoryFilter.categories.<get-categories>|<get-categories>(){}[0]
 
-    open fun isAllowed(sh.vcm.sensiblelogging/Category): kotlin/Boolean // sh.vcm.sensiblelogging.filter/CategoryFilter.isAllowed|isAllowed(sh.vcm.sensiblelogging.Category){}[0]
-    open fun locateField(sh.vcm.sensiblelogging/Line): sh.vcm.sensiblelogging/Category // sh.vcm.sensiblelogging.filter/CategoryFilter.locateField|locateField(sh.vcm.sensiblelogging.Line){}[0]
+    open fun isAllowed(kotlin/String): kotlin/Boolean // sh.vcm.sensiblelogging.filter/CategoryFilter.isAllowed|isAllowed(kotlin.String){}[0]
+    open fun locateField(sh.vcm.sensiblelogging/Line): kotlin/String // sh.vcm.sensiblelogging.filter/CategoryFilter.locateField|locateField(sh.vcm.sensiblelogging.Line){}[0]
 }
 
 abstract class sh.vcm.sensiblelogging.filter/LogLevelFilter : sh.vcm.sensiblelogging.filter/FieldFilter<sh.vcm.sensiblelogging/Level> { // sh.vcm.sensiblelogging.filter/LogLevelFilter|null[0]
@@ -138,11 +138,11 @@ final class sh.vcm.sensiblelogging.filter/CombineFilters { // sh.vcm.sensiblelog
 }
 
 final class sh.vcm.sensiblelogging.filter/SimpleCategoryFilter : sh.vcm.sensiblelogging.filter/CategoryFilter { // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter|null[0]
-    constructor <init>(kotlin.collections/List<sh.vcm.sensiblelogging/Category>) // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter.<init>|<init>(kotlin.collections.List<sh.vcm.sensiblelogging.Category>){}[0]
-    constructor <init>(sh.vcm.sensiblelogging/Category) // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter.<init>|<init>(sh.vcm.sensiblelogging.Category){}[0]
+    constructor <init>(kotlin.collections/List<kotlin/String>) // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter.<init>|<init>(kotlin.collections.List<kotlin.String>){}[0]
+    constructor <init>(kotlin/String) // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter.<init>|<init>(kotlin.String){}[0]
 
     final val categories // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter.categories|{}categories[0]
-        final fun <get-categories>(): kotlin.collections/List<sh.vcm.sensiblelogging/Category> // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter.categories.<get-categories>|<get-categories>(){}[0]
+        final fun <get-categories>(): kotlin.collections/List<kotlin/String> // sh.vcm.sensiblelogging.filter/SimpleCategoryFilter.categories.<get-categories>|<get-categories>(){}[0]
 }
 
 final class sh.vcm.sensiblelogging.filter/SimpleLogLevelFilter : sh.vcm.sensiblelogging.filter/LogLevelFilter { // sh.vcm.sensiblelogging.filter/SimpleLogLevelFilter|null[0]
@@ -153,10 +153,10 @@ final class sh.vcm.sensiblelogging.filter/SimpleLogLevelFilter : sh.vcm.sensible
 }
 
 final class sh.vcm.sensiblelogging/Line { // sh.vcm.sensiblelogging/Line|null[0]
-    constructor <init>(kotlin/Long, sh.vcm.sensiblelogging/Category, sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/Boolean, kotlin/Throwable?, kotlin.collections/Map<kotlin/String, kotlin/String>) // sh.vcm.sensiblelogging/Line.<init>|<init>(kotlin.Long;sh.vcm.sensiblelogging.Category;sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    constructor <init>(kotlin/Long, kotlin/String, sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/Boolean, kotlin/Throwable?, kotlin.collections/Map<kotlin/String, kotlin/String>) // sh.vcm.sensiblelogging/Line.<init>|<init>(kotlin.Long;kotlin.String;sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
 
     final val category // sh.vcm.sensiblelogging/Line.category|{}category[0]
-        final fun <get-category>(): sh.vcm.sensiblelogging/Category // sh.vcm.sensiblelogging/Line.category.<get-category>|<get-category>(){}[0]
+        final fun <get-category>(): kotlin/String // sh.vcm.sensiblelogging/Line.category.<get-category>|<get-category>(){}[0]
     final val level // sh.vcm.sensiblelogging/Line.level|{}level[0]
         final fun <get-level>(): sh.vcm.sensiblelogging/Level // sh.vcm.sensiblelogging/Line.level.<get-level>|<get-level>(){}[0]
     final val message // sh.vcm.sensiblelogging/Line.message|{}message[0]
@@ -171,13 +171,13 @@ final class sh.vcm.sensiblelogging/Line { // sh.vcm.sensiblelogging/Line|null[0]
         final fun <get-timestamp>(): kotlin/Long // sh.vcm.sensiblelogging/Line.timestamp.<get-timestamp>|<get-timestamp>(){}[0]
 
     final fun component1(): kotlin/Long // sh.vcm.sensiblelogging/Line.component1|component1(){}[0]
-    final fun component2(): sh.vcm.sensiblelogging/Category // sh.vcm.sensiblelogging/Line.component2|component2(){}[0]
+    final fun component2(): kotlin/String // sh.vcm.sensiblelogging/Line.component2|component2(){}[0]
     final fun component3(): sh.vcm.sensiblelogging/Level // sh.vcm.sensiblelogging/Line.component3|component3(){}[0]
     final fun component4(): kotlin/String // sh.vcm.sensiblelogging/Line.component4|component4(){}[0]
     final fun component5(): kotlin/Boolean // sh.vcm.sensiblelogging/Line.component5|component5(){}[0]
     final fun component6(): kotlin/Throwable? // sh.vcm.sensiblelogging/Line.component6|component6(){}[0]
     final fun component7(): kotlin.collections/Map<kotlin/String, kotlin/String> // sh.vcm.sensiblelogging/Line.component7|component7(){}[0]
-    final fun copy(kotlin/Long = ..., sh.vcm.sensiblelogging/Category = ..., sh.vcm.sensiblelogging/Level = ..., kotlin/String = ..., kotlin/Boolean = ..., kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...): sh.vcm.sensiblelogging/Line // sh.vcm.sensiblelogging/Line.copy|copy(kotlin.Long;sh.vcm.sensiblelogging.Category;sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    final fun copy(kotlin/Long = ..., kotlin/String = ..., sh.vcm.sensiblelogging/Level = ..., kotlin/String = ..., kotlin/Boolean = ..., kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...): sh.vcm.sensiblelogging/Line // sh.vcm.sensiblelogging/Line.copy|copy(kotlin.Long;kotlin.String;sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // sh.vcm.sensiblelogging/Line.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // sh.vcm.sensiblelogging/Line.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // sh.vcm.sensiblelogging/Line.toString|toString(){}[0]
@@ -220,17 +220,6 @@ final class sh.vcm.sensiblelogging/NSErrorException : kotlin/Exception { // sh.v
     final fun toString(): kotlin/String // sh.vcm.sensiblelogging/NSErrorException.toString|toString(){}[0]
 }
 
-final value class sh.vcm.sensiblelogging/Category { // sh.vcm.sensiblelogging/Category|null[0]
-    constructor <init>(kotlin/String) // sh.vcm.sensiblelogging/Category.<init>|<init>(kotlin.String){}[0]
-
-    final val name // sh.vcm.sensiblelogging/Category.name|{}name[0]
-        final fun <get-name>(): kotlin/String // sh.vcm.sensiblelogging/Category.name.<get-name>|<get-name>(){}[0]
-
-    final fun equals(kotlin/Any?): kotlin/Boolean // sh.vcm.sensiblelogging/Category.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // sh.vcm.sensiblelogging/Category.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // sh.vcm.sensiblelogging/Category.toString|toString(){}[0]
-}
-
 final object sh.vcm.sensiblelogging.filter/AllowAllFilter : sh.vcm.sensiblelogging.filter/Filter { // sh.vcm.sensiblelogging.filter/AllowAllFilter|null[0]
     final fun matches(sh.vcm.sensiblelogging/Line): kotlin/Boolean // sh.vcm.sensiblelogging.filter/AllowAllFilter.matches|matches(sh.vcm.sensiblelogging.Line){}[0]
 }
@@ -248,8 +237,8 @@ final object sh.vcm.sensiblelogging.formatter/SimpleFormatter : sh.vcm.sensiblel
 }
 
 final object sh.vcm.sensiblelogging.util/Constants { // sh.vcm.sensiblelogging.util/Constants|null[0]
-    final val DEFAULT_CATEGORY // sh.vcm.sensiblelogging.util/Constants.DEFAULT_CATEGORY|{}DEFAULT_CATEGORY[0]
-        final fun <get-DEFAULT_CATEGORY>(): sh.vcm.sensiblelogging/Category // sh.vcm.sensiblelogging.util/Constants.DEFAULT_CATEGORY.<get-DEFAULT_CATEGORY>|<get-DEFAULT_CATEGORY>(){}[0]
+    final const val DEFAULT_CATEGORY // sh.vcm.sensiblelogging.util/Constants.DEFAULT_CATEGORY|{}DEFAULT_CATEGORY[0]
+        final fun <get-DEFAULT_CATEGORY>(): kotlin/String // sh.vcm.sensiblelogging.util/Constants.DEFAULT_CATEGORY.<get-DEFAULT_CATEGORY>|<get-DEFAULT_CATEGORY>(){}[0]
 }
 
 final object sh.vcm.sensiblelogging.util/MetaDataFactory { // sh.vcm.sensiblelogging.util/MetaDataFactory|null[0]
@@ -258,31 +247,31 @@ final object sh.vcm.sensiblelogging.util/MetaDataFactory { // sh.vcm.sensiblelog
 
 final object sh.vcm.sensiblelogging/Logger { // sh.vcm.sensiblelogging/Logger|null[0]
     final fun addChannels(kotlin/Array<out sh.vcm.sensiblelogging.channel/Channel>...) // sh.vcm.sensiblelogging/Logger.addChannels|addChannels(kotlin.Array<out|sh.vcm.sensiblelogging.channel.Channel>...){}[0]
-    final fun d(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.d|d(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun d(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.d|d(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.IntArray...){}[0]
     final fun d(kotlin/String, kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.d|d(kotlin.String;kotlin.IntArray...){}[0]
-    final fun d(kotlin/String, sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.d|d(kotlin.String;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
-    final fun e(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun d(kotlin/String, kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.d|d(kotlin.String;kotlin.String;kotlin.IntArray...){}[0]
+    final fun e(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.IntArray...){}[0]
     final fun e(kotlin/String, kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.IntArray...){}[0]
-    final fun e(kotlin/String, kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun e(kotlin/String, kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.String;kotlin.IntArray...){}[0]
+    final fun e(kotlin/String, kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.IntArray...){}[0]
     final fun e(kotlin/String, kotlin/Throwable? = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.Throwable?;kotlin.IntArray...){}[0]
-    final fun e(kotlin/String, kotlin/Throwable? = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.Throwable?;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
-    final fun e(kotlin/String, sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
-    final fun i(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.i|i(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun e(kotlin/String, kotlin/Throwable? = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.e|e(kotlin.String;kotlin.Throwable?;kotlin.String;kotlin.IntArray...){}[0]
+    final fun i(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.i|i(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.IntArray...){}[0]
     final fun i(kotlin/String, kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.i|i(kotlin.String;kotlin.IntArray...){}[0]
-    final fun i(kotlin/String, sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.i|i(kotlin.String;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
-    final fun log(sh.vcm.sensiblelogging/Level = ..., kotlin/String, kotlin/Boolean, sh.vcm.sensiblelogging/Category = ..., kotlin.collections/List<kotlin/Int> = ..., kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/Int = ...) // sh.vcm.sensiblelogging/Logger.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;sh.vcm.sensiblelogging.Category;kotlin.collections.List<kotlin.Int>;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.Int){}[0]
-    final fun log(sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/Boolean, sh.vcm.sensiblelogging/Meta, sh.vcm.sensiblelogging/Category = ..., kotlin.collections/List<kotlin/Int> = ..., kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // sh.vcm.sensiblelogging/Logger.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;sh.vcm.sensiblelogging.Meta;sh.vcm.sensiblelogging.Category;kotlin.collections.List<kotlin.Int>;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    final fun i(kotlin/String, kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.i|i(kotlin.String;kotlin.String;kotlin.IntArray...){}[0]
+    final fun log(sh.vcm.sensiblelogging/Level = ..., kotlin/String, kotlin/Boolean, kotlin/String = ..., kotlin.collections/List<kotlin/Int> = ..., kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/Int = ...) // sh.vcm.sensiblelogging/Logger.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;kotlin.String;kotlin.collections.List<kotlin.Int>;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.Int){}[0]
+    final fun log(sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/Boolean, sh.vcm.sensiblelogging/Meta, kotlin/String = ..., kotlin.collections/List<kotlin/Int> = ..., kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // sh.vcm.sensiblelogging/Logger.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.Boolean;sh.vcm.sensiblelogging.Meta;kotlin.String;kotlin.collections.List<kotlin.Int>;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
     final fun removeChannels(kotlin/Array<out sh.vcm.sensiblelogging.channel/Channel>...) // sh.vcm.sensiblelogging/Logger.removeChannels|removeChannels(kotlin.Array<out|sh.vcm.sensiblelogging.channel.Channel>...){}[0]
-    final fun v(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.v|v(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun v(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.v|v(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.IntArray...){}[0]
     final fun v(kotlin/String, kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.v|v(kotlin.String;kotlin.IntArray...){}[0]
-    final fun v(kotlin/String, sh.vcm.sensiblelogging/Category = ...) // sh.vcm.sensiblelogging/Logger.v|v(kotlin.String;sh.vcm.sensiblelogging.Category){}[0]
-    final fun v(kotlin/String, sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.v|v(kotlin.String;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
-    final fun w(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun v(kotlin/String, kotlin/String = ...) // sh.vcm.sensiblelogging/Logger.v|v(kotlin.String;kotlin.String){}[0]
+    final fun v(kotlin/String, kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.v|v(kotlin.String;kotlin.String;kotlin.IntArray...){}[0]
+    final fun w(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.IntArray...){}[0]
     final fun w(kotlin/String, kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.IntArray...){}[0]
-    final fun w(kotlin/String, kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun w(kotlin/String, kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.String;kotlin.IntArray...){}[0]
+    final fun w(kotlin/String, kotlin/Throwable? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.Throwable?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.IntArray...){}[0]
     final fun w(kotlin/String, kotlin/Throwable? = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.Throwable?;kotlin.IntArray...){}[0]
-    final fun w(kotlin/String, kotlin/Throwable? = ..., sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.Throwable?;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
-    final fun w(kotlin/String, sh.vcm.sensiblelogging/Category = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;sh.vcm.sensiblelogging.Category;kotlin.IntArray...){}[0]
+    final fun w(kotlin/String, kotlin/Throwable? = ..., kotlin/String = ..., kotlin/IntArray... = ...) // sh.vcm.sensiblelogging/Logger.w|w(kotlin.String;kotlin.Throwable?;kotlin.String;kotlin.IntArray...){}[0]
 
     final object Setup { // sh.vcm.sensiblelogging/Logger.Setup|null[0]
         final fun addChannels(kotlin.collections/List<sh.vcm.sensiblelogging.channel/Channel>) // sh.vcm.sensiblelogging/Logger.Setup.addChannels|addChannels(kotlin.collections.List<sh.vcm.sensiblelogging.channel.Channel>){}[0]
@@ -303,7 +292,11 @@ final object sh.vcm.sensiblelogging/LoggerBridge { // sh.vcm.sensiblelogging/Log
     final fun log(sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/String, platform.Foundation/NSError?, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin/String, kotlin/String, kotlin/Int) // sh.vcm.sensiblelogging/LoggerBridge.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.String;platform.Foundation.NSError?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.String;kotlin.Int){}[0]
 }
 
+final val sh.vcm.sensiblelogging/name // sh.vcm.sensiblelogging/name|@kotlin.String{}name[0]
+    final inline fun (kotlin/String).<get-name>(): kotlin/String // sh.vcm.sensiblelogging/name.<get-name>|<get-name>@kotlin.String(){}[0]
+
 final fun (platform.Foundation/NSError).sh.vcm.sensiblelogging/asThrowable(): kotlin/Throwable // sh.vcm.sensiblelogging/asThrowable|asThrowable@platform.Foundation.NSError(){}[0]
 final fun (sh.vcm.sensiblelogging.filter/Filter).sh.vcm.sensiblelogging.filter/and(sh.vcm.sensiblelogging.filter/Filter): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/and|and@sh.vcm.sensiblelogging.filter.Filter(sh.vcm.sensiblelogging.filter.Filter){}[0]
 final fun (sh.vcm.sensiblelogging.filter/Filter).sh.vcm.sensiblelogging.filter/or(sh.vcm.sensiblelogging.filter/Filter): sh.vcm.sensiblelogging.filter/Filter // sh.vcm.sensiblelogging.filter/or|or@sh.vcm.sensiblelogging.filter.Filter(sh.vcm.sensiblelogging.filter.Filter){}[0]
 final fun (sh.vcm.sensiblelogging/Logger.Setup.Configuration).sh.vcm.sensiblelogging/addNSLogChannel(sh.vcm.sensiblelogging.filter/Filter = ..., sh.vcm.sensiblelogging.formatter/Formatter = ..., kotlin/Boolean = ...): sh.vcm.sensiblelogging/Logger.Setup.Configuration // sh.vcm.sensiblelogging/addNSLogChannel|addNSLogChannel@sh.vcm.sensiblelogging.Logger.Setup.Configuration(sh.vcm.sensiblelogging.filter.Filter;sh.vcm.sensiblelogging.formatter.Formatter;kotlin.Boolean){}[0]
+final inline fun sh.vcm.sensiblelogging/Category(kotlin/String): kotlin/String // sh.vcm.sensiblelogging/Category|Category(kotlin.String){}[0]

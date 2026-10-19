@@ -28,6 +28,8 @@ import platform.posix.fflush
 import platform.posix.fprintf
 import platform.posix.stderr
 import sh.vcm.sensiblelogging.Meta
+import sh.vcm.sensiblelogging.util.Constants.DEFAULT_STACK_DEPTH
+import kotlin.experimental.ExperimentalNativeApi
 
 private val dateFormatter = NSDateFormatter().apply {
     dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
@@ -58,12 +60,26 @@ internal actual fun printToStandardError(message: String) {
     fflush(stderr)
 }
 
-internal actual fun createMeta(stackDepth: Int): Meta = Meta(
+/**
+ * Reads the call site from the stack trace. Kotlin/Native only has symbol names and source locations in it for debug
+ * binaries, so release builds get `n/a` for everything but the thread name.
+ */
+@OptIn(ExperimentalNativeApi::class)
+internal actual fun createMeta(stackDepth: Int): Meta {
+    // MetaDataFactory adds one frame for itself on top of the depth Logger asks for
+    val extraFrames = stackDepth - 1 - DEFAULT_STACK_DEPTH
+    val threadName = currentThreadName()
+    return callSiteFrame(Throwable().getStackTrace(), extraFrames)
+        ?.let { metaFromStackFrame(it, threadName) }
+        ?: unknownMeta(threadName)
+}
+
+private fun unknownMeta(threadName: String) = Meta(
     className = NOT_AVAILABLE,
     simpleClassName = NOT_AVAILABLE,
     functionName = NOT_AVAILABLE,
     lineNumber = 0,
-    threadName = currentThreadName(),
+    threadName = threadName,
     fileName = NOT_AVAILABLE
 )
 
@@ -72,4 +88,4 @@ internal fun currentThreadName(): String {
     return thread.name?.takeIf { it.isNotEmpty() } ?: if (thread.isMainThread) "main" else NOT_AVAILABLE
 }
 
-private const val NOT_AVAILABLE = "n/a"
+internal const val NOT_AVAILABLE = "n/a"

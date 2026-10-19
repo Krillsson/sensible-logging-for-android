@@ -2,13 +2,12 @@ package sh.vcm.sensiblelogging.filter
 
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
-import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 
 internal class SimpleLogLevelFilterTest {
 
-    private val category = Category("UnitTest")
+    private val category = "UnitTest"
 
     @Test
     internal fun `error filter does not pass debug`() {
