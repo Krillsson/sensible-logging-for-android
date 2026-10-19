@@ -179,8 +179,9 @@ object Categories {
 }
 ```
 
-_`Category` used to be a value class. `Category("UI")` and `category.name` still compile, but are deprecated and
-just return the string._
+_`Category` used to be a value class. `Category("UI")` still compiles, but is deprecated and just returns the string.
+`category.name` is deprecated too and now needs `import sh.vcm.sensiblelogging.name`, since it is an extension rather
+than a member. Neither is exported to Swift._
 
 ## Usage
 
@@ -256,13 +257,18 @@ reporter with its domain and code. An `NSError` that Kotlin created from an exce
 #### Logging from Swift
 Kotlin default arguments don't survive the Objective-C export, so `Logger` itself is awkward to call from Swift and
 can't see the Swift call site. `LoggerBridge` exists to be wrapped by a small Swift file, which passes `#fileID`,
-`#function` and `#line` so they end up in `Meta`. It is refined in Swift, which both keeps it out of autocomplete and
-renames it, so the wrapper calls `__logLevel(_:message:category:error:parameters:fileId:function:line:)`.
+`#function` and `#line` so they end up in `Meta`. The wrapper calls
+`LoggerBridge.shared.log(level:message:category:error:parameters:fileId:function:line:)`, which has the same name
+whether or not you use [SKIE](https://skie.touchlab.co).
 
 [`swift/Logger.swift`](swift/Logger.swift) is that wrapper. A Kotlin library can't ship Swift code, so it has to be
-compiled in a Swift module that can see your framework: either put it in your framework module's `src/appleMain/swift`
-if you use [SKIE's Swift code bundling](https://skie.touchlab.co/features/swift-code-bundling), where no import is
-needed, or add it to your iOS app target and change its `import` to the name of your framework.
+compiled in a Swift module that can see your framework. Either:
+
+- add it to your iOS app target and change its `import` to the name of your framework, or
+- with [SKIE's Swift code bundling](https://skie.touchlab.co/features/swift-code-bundling), put it in your framework
+  module's `src/iosMain/swift` (or another Apple source set's `swift` folder) and remove the `import`, since the file
+  becomes part of the framework itself. Its functions are `public` so your app can call them from outside the
+  framework.
 
 It adds static `v`, `d`, `i`, `w` and `e` functions to the exported Kotlin `Logger` in an extension, so Swift call sites
 read the same way Kotlin ones do, and `Logger.Setup` and `Logger.SetupConfiguration` are right next to them. It also

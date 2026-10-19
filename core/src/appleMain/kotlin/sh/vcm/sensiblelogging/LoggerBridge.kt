@@ -20,12 +20,8 @@ package sh.vcm.sensiblelogging
 import platform.Foundation.NSError
 import sh.vcm.sensiblelogging.util.currentThreadName
 import sh.vcm.sensiblelogging.util.metaFromSourceLocation
-import kotlin.experimental.ExperimentalObjCRefinement
-import kotlin.native.ShouldRefineInSwift
 
-@OptIn(ExperimentalObjCRefinement::class)
 object LoggerBridge {
-    @ShouldRefineInSwift
     fun log(
         level: Level,
         message: String,

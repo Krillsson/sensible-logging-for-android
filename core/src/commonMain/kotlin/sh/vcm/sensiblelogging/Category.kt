@@ -16,15 +16,22 @@
 
 package sh.vcm.sensiblelogging
 
+import kotlin.experimental.ExperimentalObjCRefinement
+import kotlin.native.HiddenFromObjC
+
 /**
  * A category is a plain string, so it reads as `String` from Swift and Java too.
  */
 typealias Category = String
 
+@OptIn(ExperimentalObjCRefinement::class)
+@HiddenFromObjC
 @Deprecated("Category is a String, use the string itself", ReplaceWith("name"))
 @Suppress("FunctionName", "NOTHING_TO_INLINE")
 inline fun Category(name: String): Category = name
 
+@OptIn(ExperimentalObjCRefinement::class)
+@HiddenFromObjC
 @Deprecated("Category is a String, use the category itself", ReplaceWith("this"))
 inline val Category.name: String
     get() = this
