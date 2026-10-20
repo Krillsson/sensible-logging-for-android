@@ -27,7 +27,7 @@ class SharedPreferencesCategoryFilter(
 ) : CategoryFilter() {
 
     private lateinit var _categories: List<Category>
-    private val _defaultCategories: Set<String> = defaultCategories.map { it.name }.toSet()
+    private val _defaultCategories: Set<Category> = defaultCategories
 
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == stringArrayPreferenceKey) {
@@ -45,7 +45,6 @@ class SharedPreferencesCategoryFilter(
 
     private fun readValue() {
         _categories = preferences.getStringSet(stringArrayPreferenceKey, _defaultCategories)
-            ?.map { Category(it) }
             ?.toList()
             .orEmpty()
     }
