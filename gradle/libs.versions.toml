@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.2.20"
+kotlin = "2.4.20"
 x_lifecycle = "2.8.7"
 x_appcompat = "1.7.0"
 android_library_plugin = "9.3.2"
@@ -21,3 +21,4 @@ junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android_library_plugin" }
 maven-publish = { id = "com.vanniktech.maven.publish", version = "0.37.0" }
+binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.18.1" }
