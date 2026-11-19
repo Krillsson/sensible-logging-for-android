@@ -9,12 +9,12 @@ internal class SourceLocationMetaTest {
     @Test
     internal fun `should split a swift file id into module and file`() {
         // WHEN
-        val meta = metaFromSourceLocation("MoniteeiOS/ServerListView.swift", "body", 42, "main")
+        val meta = metaFromSourceLocation("SampleApp/ServerListView.swift", "body", 42, "main")
 
         // THEN
         assertEquals(
             Meta(
-                className = "MoniteeiOS.ServerListView",
+                className = "SampleApp.ServerListView",
                 simpleClassName = "ServerListView",
                 functionName = "body",
                 lineNumber = 42,

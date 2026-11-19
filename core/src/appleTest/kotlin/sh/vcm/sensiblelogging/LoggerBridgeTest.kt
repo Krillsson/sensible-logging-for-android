@@ -37,7 +37,8 @@ internal class LoggerBridgeTest {
             category = "Network",
             error = error,
             parameters = mapOf("host" to "nas.local"),
-            fileId = "MoniteeiOS/ServerListView.swift",
+            channels = emptyList(),
+            fileId = "SampleApp/ServerListView.swift",
             function = "body",
             line = 42
         )
@@ -55,11 +56,37 @@ internal class LoggerBridgeTest {
         assertTrue(meta.threadName.orEmpty().isNotEmpty())
     }
 
-    private class RecordingDebugChannel : DebugChannel() {
+    @Test
+    internal fun `should log to the channels passed from swift`() {
+        // GIVEN
+        val targeted = RecordingDebugChannel(id = 101, default = false)
+        val other = RecordingDebugChannel(id = 102, default = false)
+        Logger.Setup.addChannels(listOf(targeted, other))
+
+        // WHEN
+        LoggerBridge.log(
+            level = Level.INFO,
+            message = "Only for one channel",
+            category = "Network",
+            error = null,
+            parameters = emptyMap(),
+            channels = listOf(101),
+            fileId = "SampleApp/ServerListView.swift",
+            function = "body",
+            line = 42
+        )
+
+        // THEN
+        assertEquals("Only for one channel", targeted.entries.single().first.message)
+        assertTrue(other.entries.isEmpty())
+    }
+
+    private class RecordingDebugChannel(
+        override val id: Int = 100,
+        override val default: Boolean = true
+    ) : DebugChannel() {
         val entries = mutableListOf<Pair<Line, Meta>>()
         override val filter: Filter = AllowAllFilter
-        override val id: Int = 100
-        override val default: Boolean = true
         override fun print(line: Line, meta: Meta) {
             entries += line to meta
         }

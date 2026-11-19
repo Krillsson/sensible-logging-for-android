@@ -144,7 +144,7 @@ final class UserDefaultsCategoryFilter: NSObject, Filter {
 }
 
 let configuration = Logger.SetupConfiguration()
-configuration.addNSLogChannel(filter: UserDefaultsCategoryFilter(), formatter: LogCatFormatterExtended.shared,
+configuration.addNSLogChannel(filter: UserDefaultsCategoryFilter(), formatter: SimpleFormatter.shared,
                               default: true)
 Logger.Setup.shared.addChannels(channels: configuration.create())
 ```
@@ -235,7 +235,7 @@ your debug UI. Or provide a shortcut from your app settings to dump the database
 Want to control the log categories in runtime? Use the `SharedPreferencesCategoryFilter` with your `LogCatChannel` and enable updating of it from your debug UI.
 
 ### Kotlin Multiplatform
-`sensible-logging-core` supports `jvm`, `iosArm64`, `iosSimulatorArm64` and `macosArm64`, so you can log from `commonMain`.
+`sensible-logging-core` supports `jvm`, `iosArm64`, `iosSimulatorArm64`, `macosX64` and `macosArm64`, so you can log from `commonMain`.
 On Apple targets, use `addNSLogChannel` instead of `addLogCatChannel`:
 
 ```kotlin
@@ -251,6 +251,15 @@ locations in debug builds, so release builds only get the thread name. Swift doe
 trace: the Swift wrapper below passes the file, function and line of the call site. You can also pass `Meta` yourself
 with `Logger.log(level, message, preFormattedMessage, meta, ...)`.
 
+`addNSLogChannel` uses `SimpleFormatter` by default, because NSLog has no separate place for an exception the way
+LogCat has, so the formatter has to print the stack trace.
+
+If you wrap the logger in your own function, pass `stackDepth` to `Logger.log` so `Meta` points at your caller and
+not at the wrapper. The default, `4`, is the code calling `Logger`. Add one for each of your own functions in between,
+so `5` for a single wrapper function. Inline functions don't count. On the JVM, this assumes the call to `Logger.log`
+leaves at least one argument to its default value, since Kotlin then calls through a synthetic `log$default` frame; a
+call that passes every argument, such as one from Java, has to pass one less.
+
 Swift errors are not Kotlin `Throwable`s. Use `NSError.asThrowable()` to pass one as `throwable`. It wraps the error in
 `NSErrorException`, which keeps the original `NSError` for channels that want it, for example to report it to a crash
 reporter with its domain and code. An `NSError` that Kotlin created from an exception is turned back into that exception.
@@ -259,7 +268,7 @@ reporter with its domain and code. An `NSError` that Kotlin created from an exce
 Kotlin default arguments don't survive the Objective-C export, so `Logger` itself is awkward to call from Swift and
 can't see the Swift call site. `LoggerBridge` exists to be wrapped by a small Swift file, which passes `#fileID`,
 `#function` and `#line` so they end up in `Meta`. The wrapper calls
-`LoggerBridge.shared.log(level:message:category:error:parameters:fileId:function:line:)`, which has the same name
+`LoggerBridge.shared.log(level:message:category:error:parameters:channels:fileId:function:line:)`, which has the same name
 whether or not you use [SKIE](https://skie.touchlab.co).
 
 [`swift/Logger.swift`](swift/Logger.swift) is that wrapper. A Kotlin library can't ship Swift code, so it has to be
@@ -278,7 +287,11 @@ declares `typealias Category = String`, since the Kotlin typealias doesn't make 
 ```swift
 Logger.d("Loaded \(servers.count) servers", category: Categories.network)
 Logger.e("Could not connect", error: error, category: Categories.network)
+Logger.i("Synced", category: Categories.network, channels: Channels.analytics)
 ```
+
+Like `vararg channels` in Kotlin, `channels` takes any number of channel ids and sends the line to them on top of the
+default channels.
 
 Organise your Swift categories in one place too. A case-less `enum` is the Swift way to make a namespace that can't be
 instantiated:

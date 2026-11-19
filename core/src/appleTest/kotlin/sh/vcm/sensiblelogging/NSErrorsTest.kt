@@ -12,7 +12,7 @@ internal class NSErrorsTest {
     @Test
     internal fun `should wrap a plain NSError`() {
         // GIVEN
-        val error = NSError.errorWithDomain("MoniteeiOS.NetworkError", 2, mapOf<Any?, Any?>(NSLocalizedDescriptionKey to "Timed out"))
+        val error = NSError.errorWithDomain("SampleApp.NetworkError", 2, mapOf<Any?, Any?>(NSLocalizedDescriptionKey to "Timed out"))
 
         // WHEN
         val throwable = error.asThrowable()
@@ -43,12 +43,12 @@ internal class NSErrorsTest {
     @Test
     internal fun `should include domain and code when printed`() {
         // GIVEN
-        val error = NSError.errorWithDomain("MoniteeiOS.NetworkError", 2, mapOf<Any?, Any?>(NSLocalizedDescriptionKey to "Timed out"))
+        val error = NSError.errorWithDomain("SampleApp.NetworkError", 2, mapOf<Any?, Any?>(NSLocalizedDescriptionKey to "Timed out"))
 
         // WHEN
         val result = NSErrorException(error).toString()
 
         // THEN
-        assertEquals("NSErrorException(domain=MoniteeiOS.NetworkError, code=2): Timed out", result)
+        assertEquals("NSErrorException(domain=SampleApp.NetworkError, code=2): Timed out", result)
     }
 }

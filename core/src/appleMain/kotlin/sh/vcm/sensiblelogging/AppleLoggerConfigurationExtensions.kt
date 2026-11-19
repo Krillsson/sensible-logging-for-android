@@ -20,11 +20,11 @@ import sh.vcm.sensiblelogging.channel.NSLogChannel
 import sh.vcm.sensiblelogging.filter.AllowAllFilter
 import sh.vcm.sensiblelogging.filter.Filter
 import sh.vcm.sensiblelogging.formatter.Formatter
-import sh.vcm.sensiblelogging.formatter.LogCatFormatterExtended
+import sh.vcm.sensiblelogging.formatter.SimpleFormatter
 
 fun Logger.Setup.Configuration.addNSLogChannel(
     filter: Filter = AllowAllFilter,
-    formatter: Formatter = LogCatFormatterExtended,
+    formatter: Formatter = SimpleFormatter,
     default: Boolean = true
 ): Logger.Setup.Configuration {
     addChannel(NSLogChannel(formatter, filter, default))

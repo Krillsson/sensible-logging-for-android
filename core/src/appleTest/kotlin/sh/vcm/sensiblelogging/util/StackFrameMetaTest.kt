@@ -49,6 +49,32 @@ internal class StackFrameMetaTest {
     }
 
     @Test
+    internal fun `should name root package top level functions after their file`() {
+        // GIVEN
+        val frame = "3   App   0x1053f4de7   kfun:#main(){} + 599 (/src/Main.kt:3:5)"
+
+        // WHEN
+        val meta = metaFromStackFrame(frame, "main")
+
+        // THEN
+        assertEquals("MainKt", meta?.className)
+        assertEquals("MainKt", meta?.simpleClassName)
+        assertEquals("main", meta?.functionName)
+    }
+
+    @Test
+    internal fun `should leave out the class of root package top level functions without a file`() {
+        // GIVEN
+        val frame = "3   App   0x1053f4de7   kfun:#main(){} + 599 "
+
+        // WHEN
+        val meta = metaFromStackFrame(frame, "main")
+
+        // THEN
+        assertEquals(Meta(null, null, "main", null, "main", null), meta)
+    }
+
+    @Test
     internal fun `should drop the receiver from extension functions`() {
         // GIVEN
         val frame = "3   App   0x1053f4de7   kfun:com.example#asThrowable__at__platform.Foundation.NSError(){}" +

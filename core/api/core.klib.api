@@ -1,5 +1,5 @@
 // Klib ABI Dump
-// Targets: [iosArm64, iosSimulatorArm64, macosArm64]
+// Targets: [iosArm64, iosSimulatorArm64, macosArm64, macosX64]
 // Rendering settings:
 // - Signature version: 2
 // - Show manifest properties: true
@@ -289,7 +289,7 @@ final object sh.vcm.sensiblelogging/Logger { // sh.vcm.sensiblelogging/Logger|nu
 }
 
 final object sh.vcm.sensiblelogging/LoggerBridge { // sh.vcm.sensiblelogging/LoggerBridge|null[0]
-    final fun log(sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/String, platform.Foundation/NSError?, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin/String, kotlin/String, kotlin/Int) // sh.vcm.sensiblelogging/LoggerBridge.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.String;platform.Foundation.NSError?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;kotlin.String;kotlin.Int){}[0]
+    final fun log(sh.vcm.sensiblelogging/Level, kotlin/String, kotlin/String, platform.Foundation/NSError?, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/List<kotlin/Int>, kotlin/String, kotlin/String, kotlin/Int) // sh.vcm.sensiblelogging/LoggerBridge.log|log(sh.vcm.sensiblelogging.Level;kotlin.String;kotlin.String;platform.Foundation.NSError?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.List<kotlin.Int>;kotlin.String;kotlin.String;kotlin.Int){}[0]
 }
 
 final val sh.vcm.sensiblelogging/name // sh.vcm.sensiblelogging/name|@kotlin.String{}name[0]

@@ -28,6 +28,7 @@ object LoggerBridge {
         category: String,
         error: NSError?,
         parameters: Map<String, String>,
+        channels: List<Int>,
         fileId: String,
         function: String,
         line: Int
@@ -38,6 +39,7 @@ object LoggerBridge {
             preFormattedMessage = false,
             meta = metaFromSourceLocation(fileId, function, line, currentThreadName()),
             category = category,
+            channels = channels,
             throwable = error?.asThrowable(),
             parameters = parameters
         )

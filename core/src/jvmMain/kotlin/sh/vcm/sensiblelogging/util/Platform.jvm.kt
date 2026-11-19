@@ -34,13 +34,22 @@ internal actual fun formatTimestamp(timestamp: Long): String = dateFormatter.for
 internal actual fun printToStandardError(message: String) = System.err.println(message)
 
 internal actual fun createMeta(stackDepth: Int): Meta {
-    val element = Throwable().stackTrace[stackDepth]
+    val threadName = Thread.currentThread().name
+    // A stackDepth past the end of the stack leaves only the thread name, like an Apple release build
+    val element = Throwable().stackTrace.getOrNull(stackDepth) ?: return Meta(
+        className = null,
+        simpleClassName = null,
+        functionName = null,
+        lineNumber = null,
+        threadName = threadName,
+        fileName = null
+    )
     return Meta(
         className = element.className,
         simpleClassName = element.className.substring(element.className.lastIndexOf('.') + 1),
         functionName = element.methodName,
         lineNumber = element.lineNumber.takeIf { it >= 0 },
-        threadName = Thread.currentThread().name,
+        threadName = threadName,
         fileName = element.fileName
     )
 }

@@ -2,15 +2,17 @@
 
 ## [Unreleased]
 
-- `sensible-logging-core` is now a Kotlin Multiplatform library targeting `jvm`, `iosArm64`, `iosSimulatorArm64` and
-  `macosArm64`. The JVM API is unchanged apart from the breaking changes below. Apple targets get an `NSLogChannel` and
+- `sensible-logging-core` is now a Kotlin Multiplatform library targeting `jvm`, `iosArm64`, `iosSimulatorArm64`,
+  `macosX64` and `macosArm64`. The JVM API is unchanged apart from the breaking changes below. Apple targets get an `NSLogChannel` and
   `addNSLogChannel`.
 - Added a `Logger.log` overload that takes `Meta` instead of reading it from the stack.
 - `Meta` is read from the stack trace on Apple targets too, so Kotlin code logging from `commonMain` gets its class,
   function, file and line in debug builds. Release builds only get the thread name.
 - Added `NSError.asThrowable()` and `NSErrorException` on Apple targets for logging Swift and Objective-C errors.
 - Added `LoggerBridge` for Apple targets, plus `swift/Logger.swift`, a Swift extension on `Logger` to copy into an iOS app, so
-  Swift log calls carry their file, function and line.
+  Swift log calls carry their file, function and line. The Swift functions take `channels` like the Kotlin ones.
+- `addNSLogChannel` uses `SimpleFormatter` by default, so exceptions show up in the log.
+- On the JVM, a `stackDepth` past the end of the stack gives `Meta` with only the thread name instead of throwing.
 - *BREAKING*: the fields of `Meta` are nullable. A field is `null` when the platform can't tell, instead of `n/a`, and
   `SimpleFormatter` and `LogCatFormatterExtended` leave out the fields that are missing.
 - *BREAKING*: `Category` is now a `typealias` for `String` instead of a value class, so it reads as a `String` from

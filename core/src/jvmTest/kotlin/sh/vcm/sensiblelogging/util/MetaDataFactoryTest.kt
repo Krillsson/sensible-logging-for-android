@@ -43,4 +43,13 @@ internal class MetaDataFactoryTest {
         assertEquals("MetaDataFactoryTest.kt", meta.fileName)
         assertEquals(Thread.currentThread().name, meta.threadName)
     }
+
+    @Test
+    internal fun `should only read the thread name when the stack depth is past the end of the stack`() {
+        // WHEN
+        val meta = MetaDataFactory.create(10_000)
+
+        // THEN
+        assertEquals(Meta(null, null, null, null, Thread.currentThread().name, null), meta)
+    }
 }

@@ -191,6 +191,18 @@ object Logger {
         vararg channels: Int = DEFAULT_CHANNELS
     ) = processor.log(Level.ERROR, message, false, DEFAULT_CATEGORY, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH, null)
 
+    /**
+     * Logs with full control over the line.
+     *
+     * [stackDepth] tells the logger which stack frame to read [Meta] from. The default, `4`, is the code calling this
+     * function. If you wrap the logger, pass `4` plus the number of your own functions between the call site and
+     * `Logger`, so `5` for a single wrapper function. Inline functions don't count, since they don't get a frame.
+     *
+     * On the JVM, the default assumes the call leaves at least one argument to its default value, which makes Kotlin
+     * call through a synthetic `log$default` frame. A call that passes every argument, such as one from Java, has one
+     * frame less and should pass one less. Apple targets count from the outermost `Logger` frame, so it doesn't matter
+     * there.
+     */
     @JvmStatic
     fun log(
         level: Level = Level.DEBUG,

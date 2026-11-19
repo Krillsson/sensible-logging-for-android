@@ -53,16 +53,17 @@ internal fun metaFromStackFrame(frame: String, threadName: String?): Meta? {
     }
     val location = SOURCE_LOCATION.find(frame)?.groupValues
     val fileName = location?.get(1)?.substringAfterLast('/')
-    // Top level functions are owned by their package, which starts with a lower case letter
-    val isTopLevel = declaringName.substringAfterLast('.').firstOrNull()?.isLowerCase() == true
-    val className = if (isTopLevel && fileName != null) {
-        "$declaringName.${fileName.substringBeforeLast('.')}Kt"
-    } else {
-        declaringName
+    // Top level functions are owned by their package, which starts with a lower case letter, or by nothing at all
+    // when they're in the root package
+    val isTopLevel = declaringName.substringAfterLast('.').firstOrNull()?.isLowerCase() ?: true
+    val className = when {
+        isTopLevel && fileName != null ->
+            listOf(declaringName, "${fileName.substringBeforeLast('.')}Kt").filter { it.isNotEmpty() }.joinToString(".")
+        else -> declaringName.ifEmpty { null }
     }
     return Meta(
         className = className,
-        simpleClassName = className.substringAfterLast('.'),
+        simpleClassName = className?.substringAfterLast('.'),
         functionName = functionName.substringBefore("__at__"),
         lineNumber = location?.get(2)?.toIntOrNull(),
         threadName = threadName,

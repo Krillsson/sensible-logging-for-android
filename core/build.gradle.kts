@@ -9,8 +9,8 @@ kotlin {
     jvm()
     iosArm64()
     iosSimulatorArm64()
-    macosArm64 {
-        binaries.framework {
+    listOf(macosX64(), macosArm64()).forEach {
+        it.binaries.framework {
             baseName = "SensibleLogging"
         }
     }
